@@ -9,19 +9,19 @@
 }
 
 :root {
-  --bg: #030812;
-  --bg-soft: #081423;
+  --bg: #000000;
+  --bg-soft: #060606;
   --surface: #0b1a2b;
   --surface-strong: #11253b;
   --surface-raised: #17344f;
-  --surface-glow: rgba(103, 210, 255, 0.08);
+  --surface-glow: rgba(112, 157, 180, 0.05);
   --line: rgba(153, 179, 206, 0.15);
   --line-strong: rgba(153, 179, 206, 0.28);
   --text: #f3f8ff;
   --muted: #9db3cd;
   --muted-strong: #c5d5e9;
-  --accent: #67d2ff;
-  --accent-strong: #38bdf8;
+  --accent: #7ab2cd;
+  --accent-strong: #5f8ea8;
   --accent-warm: #ffb84d;
   --accent-warm-strong: #fb923c;
   --accent-violet: #a78bfa;
@@ -42,10 +42,7 @@ html {
 body {
   min-height: 100vh;
   color: var(--text);
-  background:
-    radial-gradient(circle at 14% 4%, rgba(103, 210, 255, 0.18), transparent 24%),
-    radial-gradient(circle at 85% 6%, rgba(167, 139, 250, 0.15), transparent 28%),
-    linear-gradient(180deg, #030812 0%, #070f1f 48%, #050d1a 100%);
+  background: #000;
   font-family: 'Inter', 'Segoe UI', sans-serif;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
