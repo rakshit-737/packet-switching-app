@@ -43,8 +43,8 @@ body {
   min-height: 100vh;
   color: var(--text);
   background:
-    radial-gradient(circle at 14% -8%, rgba(103, 210, 255, 0.18), transparent 24%),
-    radial-gradient(circle at 85% -15%, rgba(167, 139, 250, 0.15), transparent 28%),
+    radial-gradient(circle at 14% 4%, rgba(103, 210, 255, 0.18), transparent 24%),
+    radial-gradient(circle at 85% 6%, rgba(167, 139, 250, 0.15), transparent 28%),
     linear-gradient(180deg, #030812 0%, #070f1f 48%, #050d1a 100%);
   font-family: 'Inter', 'Segoe UI', sans-serif;
   text-rendering: optimizeLegibility;
@@ -87,7 +87,7 @@ h4,
 .brand-title,
 .section-heading h2,
 .page-hero h1 {
-  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 ::selection {
