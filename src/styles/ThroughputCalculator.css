@@ -1,0 +1,6 @@
+@import './DelayCalculator.css';
+
+/* Throughput Calculator inherits from DelayCalculator styles */
+.throughput-calculator {
+  /* Additional throughput-specific styles if needed */
+}

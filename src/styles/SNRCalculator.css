@@ -1,0 +1,6 @@
+@import './DelayCalculator.css';
+
+/* SNR Calculator inherits from DelayCalculator styles */
+.snr-calculator {
+  /* Additional SNR-specific styles if needed */
+}
