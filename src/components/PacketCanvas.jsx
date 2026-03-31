@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { drawPacketSwitching } from '../utils/packetVisualizer'
 
-const PACKET_COLORS = ['#38bdf8', '#60a5fa', '#22d3ee', '#34d399', '#f59e0b', '#fb7185']
+const PACKET_COLORS = ['#24546f', '#2f4f73', '#1f5e69', '#34d399', '#f59e0b', '#fb7185']
 const CANVAS_ASPECT_RATIO = 16 / 10
 const MAX_CANVAS_WIDTH = 960
 
