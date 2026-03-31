@@ -1,6 +1,21 @@
 @import './DelayCalculator.css';
 
-/* Throughput Calculator inherits from DelayCalculator styles */
-.throughput-calculator {
-  /* Additional throughput-specific styles if needed */
+.calculator--throughput .calculator-badge {
+  background: rgba(255, 184, 77, 0.12);
+  color: var(--accent-warm);
+}
+
+.calculator--throughput .formula-box {
+  border-color: rgba(255, 184, 77, 0.18);
+}
+
+.calculator--throughput .result-card.featured {
+  border-color: rgba(255, 184, 77, 0.2);
+  background:
+    radial-gradient(circle at top right, rgba(255, 184, 77, 0.14), transparent 48%),
+    rgba(9, 20, 31, 0.86);
+}
+
+.calculator--throughput .result-card strong {
+  color: var(--accent-warm);
 }

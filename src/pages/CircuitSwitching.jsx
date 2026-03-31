@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Play, Pause, RotateCcw } from 'lucide-react'
+import { Pause, Play, RotateCcw } from 'lucide-react'
 import CircuitCanvas from '../components/CircuitCanvas'
 import '../styles/CircuitSwitching.css'
 
@@ -17,8 +17,9 @@ export default function CircuitSwitching() {
   return (
     <div className="circuit-switching-page">
       <div className="page-header">
+        <span className="section-eyebrow">Circuit lab</span>
         <h1>Circuit Switching Simulator</h1>
-        <p>Experience dedicated communication channels with circuit switching.</p>
+        <p>Experience dedicated communication channels and see how reserved capacity changes the traffic behavior.</p>
       </div>
 
       <div className="simulator-container">
@@ -28,7 +29,7 @@ export default function CircuitSwitching() {
 
         <div className="control-panel card">
           <h3>Controls</h3>
-          
+
           <div className="control-group">
             <label>Simulation Speed</label>
             <div className="slider-container">
@@ -38,7 +39,7 @@ export default function CircuitSwitching() {
                 max="3"
                 step="0.5"
                 value={speed}
-                onChange={(e) => setSpeed(parseFloat(e.target.value))}
+                onChange={(event) => setSpeed(parseFloat(event.target.value))}
                 disabled={isRunning}
               />
               <span className="speed-value">{speed}x</span>
@@ -52,39 +53,38 @@ export default function CircuitSwitching() {
               min="1"
               max="5"
               value={calls}
-              onChange={(e) => setCalls(Math.max(1, Math.min(5, parseInt(e.target.value))))}
+              onChange={(event) => setCalls(Math.max(1, Math.min(5, parseInt(event.target.value, 10) || 1)))}
               disabled={isRunning}
             />
           </div>
 
           <div className="button-group">
-            <button
-              className="btn btn-primary"
-              onClick={() => setIsRunning(!isRunning)}
-            >
+            <button type="button" className="btn btn-primary" onClick={() => setIsRunning(!isRunning)}>
               {isRunning ? (
                 <>
-                  <Pause size={18} /> Pause
+                  <Pause size={18} />
+                  Pause
                 </>
               ) : (
                 <>
-                  <Play size={18} /> Start
+                  <Play size={18} />
+                  Start
                 </>
               )}
             </button>
-            <button className="btn btn-secondary" onClick={reset}>
-              <RotateCcw size={18} /> Reset
+            <button type="button" className="btn btn-secondary" onClick={reset}>
+              <RotateCcw size={18} />
+              Reset
             </button>
           </div>
 
           <div className="info-box">
-            <h4>How Circuit Switching Works:</h4>
+            <h4>How Circuit Switching Works</h4>
             <ul>
-              <li>A dedicated physical path is established before data transmission</li>
-              <li>Resources are reserved exclusively for that connection</li>
-              <li>Guaranteed bandwidth and low latency</li>
-              <li>Used in traditional telephone networks</li>
-              <li>Less efficient for bursty data traffic</li>
+              <li>A dedicated end-to-end path is established before data moves.</li>
+              <li>Resources stay reserved for the duration of the session.</li>
+              <li>Timing stays steadier, which helps real-time traffic feel predictable.</li>
+              <li>Idle moments still consume capacity, reducing efficiency for bursty loads.</li>
             </ul>
           </div>
         </div>
@@ -93,8 +93,8 @@ export default function CircuitSwitching() {
       <div className="metrics card">
         <h3>Key Metrics</h3>
         <div className="metrics-grid">
-          <MetricBox label="Connection Establishment" value="Required" />
-          <MetricBox label="Resource Utilization" value="Dedicated" />
+          <MetricBox label="Connection Setup" value="Required" />
+          <MetricBox label="Resource Use" value="Dedicated" />
           <MetricBox label="Bandwidth" value="Guaranteed" />
           <MetricBox label="Latency" value="Predictable" />
         </div>

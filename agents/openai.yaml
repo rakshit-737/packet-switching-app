@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frontend Audit"
+  short_description: "Run structured frontend quality audits"
+  default_prompt: "Use $audit to review a frontend page or component for accessibility, responsiveness, theming, performance, and visual anti-patterns."

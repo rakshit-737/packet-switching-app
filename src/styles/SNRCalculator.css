@@ -1,6 +1,21 @@
 @import './DelayCalculator.css';
 
-/* SNR Calculator inherits from DelayCalculator styles */
-.snr-calculator {
-  /* Additional SNR-specific styles if needed */
+.calculator--snr .calculator-badge {
+  background: rgba(91, 231, 161, 0.12);
+  color: var(--success);
+}
+
+.calculator--snr .formula-box {
+  border-color: rgba(91, 231, 161, 0.18);
+}
+
+.calculator--snr .result-card.featured {
+  border-color: rgba(91, 231, 161, 0.2);
+  background:
+    radial-gradient(circle at top right, rgba(91, 231, 161, 0.14), transparent 48%),
+    rgba(9, 20, 31, 0.86);
+}
+
+.calculator--snr .result-card strong {
+  color: var(--success);
 }

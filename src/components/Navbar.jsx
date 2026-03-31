@@ -1,56 +1,71 @@
-import { NavLink } from 'react-router-dom'
-import { Cpu, BookOpen, Play, Calculator } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Link, NavLink, useLocation } from 'react-router-dom'
+import { BookOpen, Calculator, Cpu, Menu, Play, X } from 'lucide-react'
+import '../styles/Navbar.css'
 
 const links = [
-  { to: '/', label: 'Home', icon: Cpu },
-  { to: '/concepts', label: 'Concepts', icon: BookOpen },
-  { to: '/visualizer', label: 'Visualizer', icon: Play },
-  { to: '/numericals', label: 'Numericals', icon: Calculator },
+  { to: '/', label: 'Home', caption: 'Overview', icon: Cpu },
+  { to: '/concepts', label: 'Concepts', caption: 'Atlas', icon: BookOpen },
+  { to: '/visualizer', label: 'Visualizer', caption: 'Lab', icon: Play },
+  { to: '/numericals', label: 'Numericals', caption: 'Solvers', icon: Calculator },
 ]
 
 export default function Navbar() {
-  return (
-    <nav style={{
-      background: '#0f1628',
-      borderBottom: '1px solid #1e2a45',
-      padding: '0 32px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      height: 64,
-      position: 'sticky',
-      top: 0,
-      zIndex: 100,
-      backdropFilter: 'blur(12px)',
-    }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-        <div style={{
-          width: 32, height: 32, borderRadius: 8,
-          background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center'
-        }}>
-          <Cpu size={18} color="#fff" />
-        </div>
-        <span style={{ fontWeight: 700, fontSize: 18, letterSpacing: '-0.5px' }}>
-          Net<span style={{ color: '#3b82f6' }}>Switch</span>
-        </span>
-      </div>
+  const [isOpen, setIsOpen] = useState(false)
+  const location = useLocation()
 
-      <div style={{ display: 'flex', gap: 4 }}>
-        {links.map(({ to, label, icon: Icon }) => (
-          <NavLink key={to} to={to} end={to === '/'} style={({ isActive }) => ({
-            display: 'flex', alignItems: 'center', gap: 6,
-            padding: '8px 16px', borderRadius: 8,
-            textDecoration: 'none', fontSize: 14, fontWeight: 500,
-            transition: 'all 0.2s',
-            background: isActive ? '#1e3a5f' : 'transparent',
-            color: isActive ? '#60a5fa' : '#64748b',
-          })}>
-            <Icon size={15} />
-            {label}
-          </NavLink>
-        ))}
+  useEffect(() => {
+    setIsOpen(false)
+  }, [location.pathname])
+
+  return (
+    <header className="navbar">
+      <div className="navbar-shell">
+        <Link to="/" className="navbar-brand">
+          <span className="brand-mark">
+            <Cpu size={18} />
+          </span>
+          <span className="brand-copy">
+            <span className="brand-title">NetSwitch</span>
+            <span className="brand-subtitle">Interactive switching lab</span>
+          </span>
+        </Link>
+
+        <button
+          type="button"
+          className="navbar-toggle"
+          aria-expanded={isOpen}
+          aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          onClick={() => setIsOpen((value) => !value)}
+        >
+          {isOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+
+        <div className={`navbar-panel ${isOpen ? 'open' : ''}`}>
+          <nav className="navbar-links" aria-label="Primary">
+            {links.map(({ to, label, caption, icon: Icon }) => (
+              <NavLink
+                key={to}
+                to={to}
+                end={to === '/'}
+                className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+              >
+                <span className="nav-icon">
+                  <Icon size={15} />
+                </span>
+                <span className="nav-copy">
+                  <strong>{label}</strong>
+                  <small>{caption}</small>
+                </span>
+              </NavLink>
+            ))}
+          </nav>
+
+          <Link to="/visualizer" className="btn btn-primary navbar-cta">
+            Open Lab
+          </Link>
+        </div>
       </div>
-    </nav>
+    </header>
   )
 }

@@ -1,4 +1,5 @@
 import { Routes, Route, Link } from 'react-router-dom'
+import { ArrowRight, Compass, Network, PlayCircle } from 'lucide-react'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import Concepts from './pages/Concepts'
@@ -23,14 +24,37 @@ export default function App() {
 
       <footer className="footer">
         <div className="footer-content">
-          <p>&copy; 2026 NetSwitch. Learn networking through interactive simulations.</p>
-          <div className="footer-links">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-              GitHub
-            </a>
-            <a href="#" target="_blank" rel="noopener noreferrer">
-              Documentation
-            </a>
+          <div className="footer-brand">
+            <span className="footer-kicker">NetSwitch Lab</span>
+            <h2>Learn switching the way it behaves in real networks.</h2>
+            <p>
+              Interactive simulations, formula solvers, and concept breakdowns designed to turn abstract theory into
+              intuition you can actually reuse.
+            </p>
+          </div>
+
+          <div className="footer-column">
+            <span className="footer-heading">Explore</span>
+            <Link to="/">Home</Link>
+            <Link to="/concepts">Concept Atlas</Link>
+            <Link to="/visualizer">Visualizer</Link>
+            <Link to="/numericals">Numericals</Link>
+          </div>
+
+          <div className="footer-column">
+            <span className="footer-heading">Best For</span>
+            <div className="footer-pill">
+              <Network size={16} />
+              Packet and circuit tradeoffs
+            </div>
+            <div className="footer-pill">
+              <PlayCircle size={16} />
+              Visual walk-throughs before exams
+            </div>
+            <div className="footer-pill">
+              <Compass size={16} />
+              Fast revision with live formulas
+            </div>
           </div>
         </div>
       </footer>
@@ -40,14 +64,21 @@ export default function App() {
 
 function NotFound() {
   return (
-    <div className="not-found">
-      <div className="not-found-content">
-        <h1>404 - Page Not Found</h1>
-        <p>The page you're looking for doesn't exist.</p>
-        <Link to="/" className="btn btn-primary">
-          Go Home
-        </Link>
+    <section className="not-found">
+      <div className="not-found-content card">
+        <span className="section-eyebrow">404 · Route lost</span>
+        <h1>This route fell off the network map.</h1>
+        <p>The page you requested does not exist, but the main learning paths are all still online.</p>
+        <div className="not-found-actions">
+          <Link to="/" className="btn btn-primary">
+            Go Home
+            <ArrowRight size={16} />
+          </Link>
+          <Link to="/visualizer" className="btn btn-secondary">
+            Open Visualizer
+          </Link>
+        </div>
       </div>
-    </div>
+    </section>
   )
 }

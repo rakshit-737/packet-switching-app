@@ -1,119 +1,159 @@
 .numericals-page {
+  display: grid;
+  gap: 1.8rem;
+}
+
+.numericals-pill-row {
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.numericals-shell {
+  display: grid;
+  gap: 1rem;
 }
 
 .tabs-container {
-  display: flex;
-  gap: 1rem;
-  border-bottom: 2px solid var(--border);
-  margin: 2rem 0;
-  justify-content: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
 }
 
 .tab-button {
-  padding: 1rem 1.5rem;
-  background: none;
-  border: none;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1rem;
+  border-radius: 24px;
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(180deg, rgba(14, 27, 41, 0.95), rgba(8, 18, 30, 0.98)),
+    var(--surface);
   color: var(--muted);
-  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
-  position: relative;
-  font-size: 0.95rem;
+  text-align: left;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+  box-shadow: var(--card-shadow);
 }
 
 .tab-button:hover {
-  color: var(--accent);
+  transform: translateY(-3px);
+  color: var(--text);
+  border-color: rgba(103, 210, 255, 0.2);
 }
 
 .tab-button.active {
-  color: var(--accent);
+  color: var(--text);
+  border-color: rgba(103, 210, 255, 0.24);
+  box-shadow: 0 24px 48px rgba(56, 189, 248, 0.14);
 }
 
-.tab-button.active::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
+.tab-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(103, 210, 255, 0.1);
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.tab-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.tab-copy strong {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.tab-copy small {
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.numericals-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.calculator-stage,
+.reference-card {
+  display: grid;
+  gap: 1.25rem;
+  padding: 1.35rem;
 }
 
 .calculators-section {
   display: flex;
-  justify-content: center;
-  animation: fadeIn 0.3s ease-in;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.reference-card {
-  margin-top: 2rem;
-}
-
-.reference-card h3 {
-  font-size: 1.3rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  color: var(--text);
 }
 
 .reference-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
+  gap: 0.9rem;
 }
 
 .reference-item {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  display: grid;
+  gap: 0.55rem;
   padding: 1rem;
+  border-radius: 22px;
+  border: 1px solid rgba(153, 179, 206, 0.1);
+  background: rgba(8, 18, 29, 0.72);
 }
 
 .reference-item strong {
-  display: block;
-  color: var(--accent);
-  margin-bottom: 0.5rem;
-  font-size: 0.95rem;
+  color: var(--muted-strong);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .reference-item code {
   display: block;
-  background: var(--bg);
-  color: #60a5fa;
-  padding: 0.75rem;
-  border-radius: 4px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.85rem;
+  width: 100%;
   overflow-x: auto;
+  padding: 0.9rem;
+  border-radius: 16px;
+  border: 1px solid rgba(103, 210, 255, 0.12);
+  background: rgba(7, 17, 27, 0.82);
+  color: var(--accent);
+  font-size: 0.86rem;
+}
+
+@media (max-width: 1080px) {
+  .numericals-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 860px) {
+  .tabs-container {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 768px) {
-  .tabs-container {
-    flex-direction: column;
-    margin: 1rem 0;
+  .calculator-stage,
+  .reference-card {
+    padding: 1rem;
   }
 
-  .tab-button {
+  .numericals-pill-row .data-pill {
     width: 100%;
-    text-align: center;
-  }
-
-  .reference-grid {
-    grid-template-columns: 1fr;
   }
 }

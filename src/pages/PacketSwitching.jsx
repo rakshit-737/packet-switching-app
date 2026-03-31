@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Play, Pause, RotateCcw } from 'lucide-react'
+import { Pause, Play, RotateCcw } from 'lucide-react'
 import PacketCanvas from '../components/PacketCanvas'
 import '../styles/PacketSwitching.css'
 
@@ -18,8 +18,9 @@ export default function PacketSwitching() {
   return (
     <div className="packet-switching-page">
       <div className="page-header">
+        <span className="section-eyebrow">Packet lab</span>
         <h1>Packet Switching Simulator</h1>
-        <p>Watch data packets navigate through a shared network independently.</p>
+        <p>Watch data packets move across a shared network and see how dynamic routing improves overall efficiency.</p>
       </div>
 
       <div className="simulator-container">
@@ -35,7 +36,7 @@ export default function PacketSwitching() {
 
         <div className="control-panel card">
           <h3>Controls</h3>
-          
+
           <div className="control-group">
             <label>Simulation Speed</label>
             <div className="slider-container">
@@ -45,7 +46,7 @@ export default function PacketSwitching() {
                 max="3"
                 step="0.5"
                 value={speed}
-                onChange={(e) => setSpeed(parseFloat(e.target.value))}
+                onChange={(event) => setSpeed(parseFloat(event.target.value))}
                 disabled={isRunning}
               />
               <span className="speed-value">{speed}x</span>
@@ -60,7 +61,7 @@ export default function PacketSwitching() {
               max="1024"
               step="64"
               value={dataSize}
-              onChange={(e) => setDataSize(Math.max(64, parseInt(e.target.value)))}
+              onChange={(event) => setDataSize(Math.max(64, parseInt(event.target.value, 10) || 64))}
               disabled={isRunning}
             />
           </div>
@@ -73,41 +74,41 @@ export default function PacketSwitching() {
               max="256"
               step="16"
               value={packetSize}
-              onChange={(e) => setPacketSize(Math.max(16, Math.min(dataSize, parseInt(e.target.value))))}
+              onChange={(event) =>
+                setPacketSize(Math.max(16, Math.min(dataSize, parseInt(event.target.value, 10) || 16)))
+              }
               disabled={isRunning}
             />
             <small>{Math.ceil(dataSize / packetSize)} packets total</small>
           </div>
 
           <div className="button-group">
-            <button
-              className="btn btn-primary"
-              onClick={() => setIsRunning(!isRunning)}
-            >
+            <button type="button" className="btn btn-primary" onClick={() => setIsRunning(!isRunning)}>
               {isRunning ? (
                 <>
-                  <Pause size={18} /> Pause
+                  <Pause size={18} />
+                  Pause
                 </>
               ) : (
                 <>
-                  <Play size={18} /> Start
+                  <Play size={18} />
+                  Start
                 </>
               )}
             </button>
-            <button className="btn btn-secondary" onClick={reset}>
-              <RotateCcw size={18} /> Reset
+            <button type="button" className="btn btn-secondary" onClick={reset}>
+              <RotateCcw size={18} />
+              Reset
             </button>
           </div>
 
           <div className="info-box">
-            <h4>How Packet Switching Works:</h4>
+            <h4>How Packet Switching Works</h4>
             <ul>
-              <li>Data is divided into small packets</li>
-              <li>Each packet contains header and payload information</li>
-              <li>Packets are routed independently through the network</li>
-              <li>Packets may arrive out of order and are reassembled at destination</li>
-              <li>More efficient use of network resources</li>
-              <li>Variable latency but flexible and scalable</li>
+              <li>Data is divided into smaller packets with their own headers.</li>
+              <li>Each packet can travel independently through the network.</li>
+              <li>Packets may arrive out of order and must be reassembled at the destination.</li>
+              <li>Links are shared, so utilization stays high for bursty traffic.</li>
             </ul>
           </div>
         </div>
