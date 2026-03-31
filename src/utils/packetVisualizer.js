@@ -87,7 +87,7 @@ function drawBackdrop(ctx, width, height, time) {
     height * 0.38,
     width * 0.7,
   )
-  glow.addColorStop(0, 'rgba(56, 189, 248, 0.18)')
+  glow.addColorStop(0, 'rgba(31, 78, 104, 0.18)')
   glow.addColorStop(0.45, 'rgba(37, 99, 235, 0.1)')
   glow.addColorStop(1, 'rgba(0, 0, 0, 0)')
 
@@ -141,11 +141,11 @@ function drawConnections(ctx, nodes, edgeUsage, time) {
     ctx.lineTo(end.x, end.y)
     ctx.stroke()
 
-    ctx.strokeStyle = `rgba(96, 165, 250, ${0.18 + Math.min(activeLoad, 5) * 0.08})`
+    ctx.strokeStyle = `rgba(55, 92, 138, ${0.18 + Math.min(activeLoad, 5) * 0.08})`
     ctx.lineWidth = 1.8 + Math.min(activeLoad, 4) * 0.45
     ctx.setLineDash([18, 18])
     ctx.lineDashOffset = -time * 22 - index * 7
-    ctx.shadowColor = 'rgba(56, 189, 248, 0.35)'
+    ctx.shadowColor = 'rgba(31, 78, 104, 0.35)'
     ctx.shadowBlur = activeLoad > 0 ? 14 : 0
     ctx.beginPath()
     ctx.moveTo(start.x, start.y)
@@ -157,8 +157,8 @@ function drawConnections(ctx, nodes, edgeUsage, time) {
 
 function drawNodes(ctx, nodes) {
   nodes.forEach((node) => {
-    const outerColor = node.role === 'destination' ? '#f59e0b' : node.role === 'source' ? '#22d3ee' : '#60a5fa'
-    const innerColor = node.role === 'destination' ? '#fde68a' : node.role === 'source' ? '#cffafe' : '#dbeafe'
+    const outerColor = node.role === 'destination' ? '#f59e0b' : node.role === 'source' ? '#1f5e69' : '#2f4f73'
+    const innerColor = node.role === 'destination' ? '#fde68a' : node.role === 'source' ? '#9fbfca' : '#a9bfd2'
 
     ctx.save()
     ctx.fillStyle = hexToRgba(outerColor, 0.14)
@@ -238,7 +238,7 @@ function drawHud(ctx, width, height, packets, time, options) {
 
   drawPill(ctx, 24, 22, 'Packet Switching', {
     background: 'rgba(8, 15, 30, 0.88)',
-    border: 'rgba(56, 189, 248, 0.4)',
+    border: 'rgba(31, 78, 104, 0.4)',
     color: '#e0f2fe',
   })
 

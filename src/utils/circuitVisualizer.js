@@ -1,4 +1,4 @@
-const CALL_COLORS = ['#22d3ee', '#38bdf8', '#34d399', '#f59e0b', '#fb7185', '#a78bfa']
+const CALL_COLORS = ['#1f5e69', '#24546f', '#34d399', '#f59e0b', '#fb7185', '#a78bfa']
 
 export function drawCircuitSwitching(ctx, width, height, calls, time, options = {}) {
   if (!ctx) return
@@ -54,13 +54,13 @@ function drawBackdrop(ctx, width, height, time) {
     width * 0.5,
   )
   glow.addColorStop(0, 'rgba(52, 211, 153, 0.16)')
-  glow.addColorStop(0.45, 'rgba(34, 211, 238, 0.08)')
+  glow.addColorStop(0.45, 'rgba(31, 96, 112, 0.08)')
   glow.addColorStop(1, 'rgba(0, 0, 0, 0)')
 
   ctx.fillStyle = glow
   ctx.fillRect(0, 0, width, height)
 
-  ctx.fillStyle = 'rgba(34, 211, 238, 0.05)'
+  ctx.fillStyle = 'rgba(31, 96, 112, 0.05)'
   ctx.beginPath()
   ctx.arc(width * 0.82, height * (0.3 + Math.sin(time * 0.25) * 0.05), width * 0.17, 0, Math.PI * 2)
   ctx.fill()
@@ -121,7 +121,7 @@ function drawSwitchCore(ctx, core) {
 }
 
 function drawRouters(ctx, layout) {
-  drawRouter(ctx, layout.source.x, layout.source.y, layout.source.label, '#22d3ee')
+  drawRouter(ctx, layout.source.x, layout.source.y, layout.source.label, '#1f5e69')
   drawRouter(ctx, layout.destination.x, layout.destination.y, layout.destination.label, '#f59e0b')
 }
 
@@ -235,8 +235,8 @@ function drawHud(ctx, width, height, calls, time, options) {
 
   drawPill(ctx, 196, 22, `${calls.length} reserved lanes`, {
     background: 'rgba(8, 27, 41, 0.72)',
-    border: 'rgba(56, 189, 248, 0.3)',
-    color: '#dbeafe',
+    border: 'rgba(31, 78, 104, 0.3)',
+    color: '#a9bfd2',
   })
 
   drawPill(ctx, width - 24, 22, 'Setup first, then steady transfer', {
