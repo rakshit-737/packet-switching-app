@@ -6,6 +6,15 @@
   z-index: 1000;
   padding: 0 1rem;
   pointer-events: none;
+  transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.38s ease;
+}
+
+.navbar.navbar-hidden {
+  transform: translateY(calc(-100% - 1rem));
+  opacity: 0;
+  pointer-events: none;
+  /* pointer-events is already none on .navbar; this ensures hidden state
+     remains non-interactive even if the cascade changes */
 }
 
 .navbar-shell {
@@ -24,6 +33,18 @@
   backdrop-filter: blur(18px);
   box-shadow: 0 18px 45px rgba(0, 0, 0, 0.24);
   pointer-events: auto;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar.navbar-scrolled .navbar-shell {
+  border-color: rgba(153, 179, 206, 0.22);
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.32);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar {
+    transition: none;
+  }
 }
 
 .navbar-brand {
@@ -75,6 +96,21 @@
   background: rgba(8, 18, 29, 0.78);
   color: var(--text);
   cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.navbar-toggle:hover {
+  background: rgba(20, 40, 60, 0.9);
+  border-color: var(--line-strong);
+}
+
+.navbar-toggle:active {
+  transform: scale(0.94);
+}
+
+.navbar-toggle:focus-visible {
+  outline: 2px solid rgba(54, 95, 120, 0.65);
+  outline-offset: 3px;
 }
 
 .navbar-panel {

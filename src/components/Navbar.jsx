@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { BookOpen, Calculator, Cpu, Menu, Play, X } from 'lucide-react'
 import '../styles/Navbar.css'
@@ -12,14 +12,42 @@ const links = [
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const [hidden, setHidden] = useState(false)
+  const lastScrollY = useRef(0)
   const location = useLocation()
 
   useEffect(() => {
     setIsOpen(false)
   }, [location.pathname])
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const y = window.scrollY
+      setScrolled(y > 12)
+
+      // Only hide/show if menu is closed
+      if (!isOpen) {
+        // Use 6px delta to prevent micro-jitter triggering hide/reveal
+        // Require 80px scroll so the nav stays visible near the page top
+        if (y > lastScrollY.current + 6 && y > 80) {
+          setHidden(true)
+        } else if (y < lastScrollY.current - 6) {
+          setHidden(false)
+        }
+      }
+      lastScrollY.current = y
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [isOpen])
+
+  // Always reveal navbar when mobile menu is open
+  const isHidden = hidden && !isOpen
+
   return (
-    <header className="navbar">
+    <header className={`navbar${scrolled ? ' navbar-scrolled' : ''}${isHidden ? ' navbar-hidden' : ''}`}>
       <div className="navbar-shell">
         <Link to="/" className="navbar-brand">
           <span className="brand-mark">

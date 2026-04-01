@@ -1,6 +1,23 @@
 import { useNavigate } from 'react-router-dom'
 import { ArrowRight, BookOpen, Calculator, Network, Play, Shield, Zap } from 'lucide-react'
+import { motion, useReducedMotion } from 'framer-motion'
 import '../styles/Home.css'
+
+// Motion variants — all animate transform/opacity only
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] } },
+}
+
+const staggerContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1 } },
+}
+
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.92 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] } },
+}
 
 const cards = [
   {
@@ -68,11 +85,24 @@ const compareCards = [
 
 export default function Home() {
   const navigate = useNavigate()
+  const prefersReducedMotion = useReducedMotion()
+
+  // When reduced motion is preferred, skip all animations
+  const motionProps = prefersReducedMotion
+    ? {}
+    : { initial: 'hidden', animate: 'visible', variants: staggerContainer }
+
+  const itemProps = prefersReducedMotion ? {} : { variants: fadeUp }
+  const scaleProps = prefersReducedMotion ? {} : { variants: scaleIn }
+
+  const viewportProps = prefersReducedMotion
+    ? {}
+    : { initial: 'hidden', whileInView: 'visible', viewport: { once: true, margin: '-60px' } }
 
   return (
     <div className="home-page">
-      <section className="home-hero card">
-        <div className="home-hero-copy">
+      <motion.section className="home-hero card" {...motionProps}>
+        <motion.div className="home-hero-copy" {...itemProps}>
           <span className="section-eyebrow">Computer Networks · Switching lab</span>
           <h1>Step inside the network and watch switching choices unfold.</h1>
           <p>
@@ -90,17 +120,21 @@ export default function Home() {
             </button>
           </div>
 
-          <div className="home-stat-row">
+          <motion.div className="home-stat-row" {...(prefersReducedMotion ? {} : { variants: staggerContainer })}>
             {heroStats.map((stat) => (
-              <div key={stat.label} className="data-pill">
+              <motion.div key={stat.label} className="data-pill" {...itemProps}>
                 <strong>{stat.value}</strong>
                 <span>{stat.label}</span>
-              </div>
+              </motion.div>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        <div className="home-hero-visual" aria-hidden="true">
+        <motion.div
+          className="home-hero-visual"
+          aria-hidden="true"
+          {...(prefersReducedMotion ? {} : { variants: scaleIn })}
+        >
           <div className="radar-board">
             <div className="radar-ring radar-ring-one" />
             <div className="radar-ring radar-ring-two" />
@@ -126,19 +160,25 @@ export default function Home() {
               <small>Traffic stays on one pre-established route.</small>
             </div>
           </div>
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
-      <section className="home-section">
-        <div className="section-heading">
+      <motion.section
+        className="home-section"
+        {...(prefersReducedMotion ? {} : { ...viewportProps, variants: staggerContainer })}
+      >
+        <motion.div className="section-heading" {...(prefersReducedMotion ? {} : { variants: fadeUp })}>
           <span className="section-eyebrow">Learning paths</span>
           <h2>Move from intuition to mastery without leaving the app.</h2>
           <p>Each path is designed to answer a different question: what it is, how it behaves, and how to solve it.</p>
-        </div>
+        </motion.div>
 
-        <div className="home-card-grid">
+        <motion.div
+          className="home-card-grid"
+          {...(prefersReducedMotion ? {} : { variants: staggerContainer })}
+        >
           {cards.map(({ icon: Icon, title, desc, to, badge, tone }) => (
-            <article key={to} className={`journey-card journey-card-${tone}`}>
+            <motion.article key={to} className={`journey-card journey-card-${tone}`} {...itemProps}>
               <div className="journey-card-top">
                 <span className="journey-icon">
                   <Icon size={22} />
@@ -153,13 +193,16 @@ export default function Home() {
                 Open {title}
                 <ArrowRight size={15} />
               </button>
-            </article>
+            </motion.article>
           ))}
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
-      <section className="home-lower-grid">
-        <div className="home-story card">
+      <motion.section
+        className="home-lower-grid"
+        {...(prefersReducedMotion ? {} : { ...viewportProps, variants: staggerContainer })}
+      >
+        <motion.div className="home-story card" {...itemProps}>
           <div className="section-heading">
             <span className="section-eyebrow">Why it clicks</span>
             <h2>Turn lecture points into visible network behavior.</h2>
@@ -182,9 +225,9 @@ export default function Home() {
               </article>
             ))}
           </div>
-        </div>
+        </motion.div>
 
-        <div className="home-compare card">
+        <motion.div className="home-compare card" {...itemProps}>
           <span className="section-eyebrow">Quick lens</span>
           <h2>Know what changes when the network gets busy.</h2>
 
@@ -201,8 +244,8 @@ export default function Home() {
               </article>
             ))}
           </div>
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
     </div>
   )
 }

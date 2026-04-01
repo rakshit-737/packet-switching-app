@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { Routes, Route, Link } from 'react-router-dom'
 import { ArrowRight, Compass, Network, PlayCircle } from 'lucide-react'
 import Navbar from './components/Navbar'
+import BootSequence from './components/BootSequence'
 import Home from './pages/Home'
 import Concepts from './pages/Concepts'
 import Visualizer from './pages/Visualizer'
@@ -8,8 +10,12 @@ import Numericals from './pages/Numericals'
 import './App.css'
 
 export default function App() {
+  const [booted, setBooted] = useState(false)
+
   return (
-    <div className="app">
+    <>
+      <BootSequence onDone={() => setBooted(true)} />
+      <div className={`app${booted ? ' app-booted' : ''}`}>
       <Navbar />
 
       <main className="main-content">
@@ -58,7 +64,8 @@ export default function App() {
           </div>
         </div>
       </footer>
-    </div>
+      </div>
+    </>
   )
 }
 
