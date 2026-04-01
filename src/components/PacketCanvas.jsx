@@ -14,11 +14,14 @@ export default function PacketCanvas({
 }) {
   const canvasRef = useRef(null)
   const animationRef = useRef(null)
+  const contextRef = useRef(null)
   const stateRef = useRef(createPacketSimulation(packetSize, dataSize))
 
   useEffect(() => {
     stateRef.current = createPacketSimulation(packetSize, dataSize)
   }, [packetSize, dataSize, resetToken])
+
+  const dimensionsRef = useRef({ width: 0, height: 0 })
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -27,13 +30,47 @@ export default function PacketCanvas({
     const context = canvas.getContext('2d')
     if (!context) return undefined
 
+    contextRef.current = context
+
+    const syncSize = () => {
+      const parentWidth = canvas.parentElement?.clientWidth || MAX_CANVAS_WIDTH
+      const width = Math.max(320, Math.min(MAX_CANVAS_WIDTH, Math.floor(parentWidth)))
+      const height = Math.max(300, Math.floor(width / CANVAS_ASPECT_RATIO))
+      const pixelRatio = window.devicePixelRatio || 1
+
+      if (
+        canvas.width !== Math.floor(width * pixelRatio) ||
+        canvas.height !== Math.floor(height * pixelRatio)
+      ) {
+        canvas.width = Math.floor(width * pixelRatio)
+        canvas.height = Math.floor(height * pixelRatio)
+        canvas.style.width = `${width}px`
+        canvas.style.height = `${height}px`
+        context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
+      }
+
+      dimensionsRef.current = { width, height }
+    }
+
+    syncSize()
+
+    const observer = new ResizeObserver(syncSize)
+    if (canvas.parentElement) observer.observe(canvas.parentElement)
+
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const context = contextRef.current
+    if (!context) return undefined
+
     let previousTimestamp = 0
 
     const animate = (timestamp) => {
       const delta = previousTimestamp === 0 ? 0 : Math.min((timestamp - previousTimestamp) / 1000, 0.05)
       previousTimestamp = timestamp
 
-      const dimensions = syncCanvasSize(canvas, context)
+      const { width, height } = dimensionsRef.current
       const simulation = stateRef.current
 
       if (isRunning) {
@@ -44,17 +81,19 @@ export default function PacketCanvas({
         }))
       }
 
-      drawPacketSwitching(
-        context,
-        dimensions.width,
-        dimensions.height,
-        simulation.packets,
-        simulation.time,
-        {
-          packetSize,
-          dataSize,
-        },
-      )
+      if (width > 0 && height > 0) {
+        drawPacketSwitching(
+          context,
+          width,
+          height,
+          simulation.packets,
+          simulation.time,
+          {
+            packetSize,
+            dataSize,
+          },
+        )
+      }
 
       animationRef.current = requestAnimationFrame(animate)
     }
@@ -90,24 +129,6 @@ function createPacketSimulation(packetSize, dataSize) {
       color: PACKET_COLORS[index % PACKET_COLORS.length],
     })),
   }
-}
-
-function syncCanvasSize(canvas, context) {
-  const parentWidth = canvas.parentElement?.clientWidth || MAX_CANVAS_WIDTH
-  const width = Math.max(320, Math.min(MAX_CANVAS_WIDTH, Math.floor(parentWidth)))
-  const height = Math.max(300, Math.floor(width / CANVAS_ASPECT_RATIO))
-  const pixelRatio = window.devicePixelRatio || 1
-
-  if (canvas.width !== Math.floor(width * pixelRatio) || canvas.height !== Math.floor(height * pixelRatio)) {
-    canvas.width = Math.floor(width * pixelRatio)
-    canvas.height = Math.floor(height * pixelRatio)
-    canvas.style.width = `${width}px`
-    canvas.style.height = `${height}px`
-  }
-
-  context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
-
-  return { width, height }
 }
 
 function clampNumber(value, fallback, min, max, step = 1) {
