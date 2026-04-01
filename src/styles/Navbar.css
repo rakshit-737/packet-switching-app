@@ -19,11 +19,16 @@
   border: 1px solid rgba(153, 179, 206, 0.16);
   border-radius: 24px;
   background:
-    linear-gradient(180deg, rgba(13, 27, 42, 0.88), rgba(6, 14, 25, 0.92)),
-    var(--surface);
-  backdrop-filter: blur(18px);
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.24);
+    linear-gradient(180deg, rgba(13, 27, 42, 0.82), rgba(6, 14, 25, 0.88));
+  backdrop-filter: blur(24px) saturate(1.4);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
   pointer-events: auto;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar-shell:hover {
+  border-color: rgba(153, 179, 206, 0.24);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.07);
 }
 
 .navbar-brand {
@@ -31,6 +36,11 @@
   align-items: center;
   gap: 0.9rem;
   text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.navbar-brand:hover {
+  opacity: 0.88;
 }
 
 .brand-mark {
@@ -41,11 +51,14 @@
   align-items: center;
   justify-content: center;
   background:
-    radial-gradient(circle at top, rgba(37, 67, 86, 0.2), transparent 58%),
-    linear-gradient(145deg, rgba(16, 48, 70, 0.95), rgba(7, 24, 39, 0.96));
-  border: 1px solid rgba(37, 67, 86, 0.2);
-  color: var(--accent);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    radial-gradient(circle at top, rgba(74, 133, 168, 0.28), transparent 60%),
+    linear-gradient(145deg, rgba(22, 58, 82, 0.95), rgba(9, 28, 44, 0.96));
+  border: 1px solid rgba(74, 133, 168, 0.28);
+  color: var(--accent-cyan);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), var(--glow-cyan);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  animation: glow-pulse 3s ease-in-out infinite;
+  will-change: box-shadow;
 }
 
 .brand-copy {
@@ -58,6 +71,10 @@
   font-size: 1.1rem;
   font-weight: 700;
   letter-spacing: -0.04em;
+  background: linear-gradient(135deg, var(--text), var(--accent-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .brand-subtitle {
@@ -75,6 +92,12 @@
   background: rgba(8, 18, 29, 0.78);
   color: var(--text);
   cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.navbar-toggle:hover {
+  border-color: rgba(74, 133, 168, 0.32);
+  background: rgba(14, 28, 44, 0.88);
 }
 
 .navbar-panel {
@@ -99,27 +122,43 @@
   text-decoration: none;
   color: var(--muted);
   transition:
-    transform 0.2s ease,
+    transform 0.25s var(--ease-spring),
     border-color 0.2s ease,
     background 0.2s ease,
-    color 0.2s ease;
+    color 0.2s ease,
+    box-shadow 0.2s ease;
   border: 1px solid transparent;
+  position: relative;
 }
 
 .nav-link:hover {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
   color: var(--text);
-  border-color: rgba(37, 67, 86, 0.16);
-  background: rgba(8, 18, 29, 0.66);
+  border-color: rgba(74, 133, 168, 0.2);
+  background: rgba(10, 22, 36, 0.72);
+  box-shadow: 0 4px 16px rgba(74, 133, 168, 0.08);
 }
 
 .nav-link.active {
   color: var(--text);
-  border-color: rgba(37, 67, 86, 0.2);
+  border-color: rgba(74, 133, 168, 0.26);
   background:
-    linear-gradient(145deg, rgba(16, 47, 69, 0.88), rgba(20, 26, 50, 0.92)),
-    var(--surface);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    linear-gradient(145deg, rgba(22, 52, 76, 0.88), rgba(14, 24, 46, 0.92));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 4px 16px rgba(74, 133, 168, 0.1);
+}
+
+/* Active indicator underline */
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-amethyst));
+  box-shadow: 0 0 8px rgba(34, 211, 238, 0.5);
 }
 
 .nav-icon {
@@ -129,9 +168,16 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(37, 67, 86, 0.14);
-  color: var(--accent);
+  background: rgba(74, 133, 168, 0.14);
+  color: var(--accent-cyan);
   flex-shrink: 0;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nav-link:hover .nav-icon,
+.nav-link.active .nav-icon {
+  background: rgba(74, 133, 168, 0.22);
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.18);
 }
 
 .nav-copy {

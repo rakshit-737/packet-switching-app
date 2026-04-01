@@ -25,8 +25,15 @@
 .comparison-intro-card {
   padding: 1rem 1.1rem;
   border-radius: 22px;
-  border: 1px solid rgba(153, 179, 206, 0.1);
-  background: rgba(8, 18, 29, 0.72);
+  border: 1px solid rgba(153, 179, 206, 0.12);
+  background: rgba(8, 18, 29, 0.78);
+  transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.comparison-intro-card:hover {
+  border-color: rgba(74, 133, 168, 0.28);
+  background: rgba(12, 26, 40, 0.9);
+  box-shadow: var(--glow-blue);
 }
 
 .comparison-intro-card h3 {
@@ -43,7 +50,7 @@
   overflow-x: auto;
   border-radius: 24px;
   border: 1px solid rgba(153, 179, 206, 0.12);
-  background: rgba(8, 18, 29, 0.7);
+  background: rgba(8, 18, 29, 0.76);
 }
 
 .comparison-table-shell table {
@@ -65,11 +72,15 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  background: rgba(11, 26, 39, 0.92);
+  background: rgba(11, 26, 39, 0.96);
 }
 
 .comparison-table-shell tbody tr:nth-child(even) {
   background: rgba(255, 255, 255, 0.02);
+}
+
+.comparison-table-shell tbody tr:hover {
+  background: rgba(74, 133, 168, 0.05);
 }
 
 .comparison-table-shell tbody tr:last-child td {
@@ -98,6 +109,13 @@
   display: grid;
   gap: 1rem;
   padding: 1.3rem;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.concept-card:hover,
+.formula-card:hover {
+  border-color: rgba(74, 133, 168, 0.3);
+  box-shadow: var(--card-shadow), var(--glow-blue);
 }
 
 .concept-card-header,
@@ -116,11 +134,19 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(31, 78, 104, 0.12);
-  color: var(--accent);
+  background: rgba(74, 133, 168, 0.14);
+  color: var(--accent-cyan);
   font-family: 'IBM Plex Mono', monospace;
   font-size: 0.9rem;
   font-weight: 600;
+  border: 1px solid rgba(74, 133, 168, 0.2);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.concept-card:hover .concept-index,
+.formula-card:hover .formula-index {
+  background: rgba(74, 133, 168, 0.24);
+  box-shadow: var(--glow-cyan);
 }
 
 .concept-card h3,
@@ -175,8 +201,8 @@
   width: 0.42rem;
   height: 0.42rem;
   border-radius: 999px;
-  background: linear-gradient(180deg, var(--accent), var(--accent-warm));
-  box-shadow: 0 0 14px rgba(31, 78, 104, 0.34);
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-amethyst));
+  box-shadow: 0 0 10px rgba(34, 211, 238, 0.3);
 }
 
 .examples-list {
@@ -188,11 +214,17 @@
 .example-tag {
   padding: 0.42rem 0.78rem;
   border-radius: 999px;
-  border: 1px solid rgba(255, 184, 77, 0.18);
+  border: 1px solid rgba(255, 184, 77, 0.22);
   background: rgba(255, 184, 77, 0.1);
   color: var(--accent-warm);
   font-size: 0.8rem;
   font-weight: 700;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.example-tag:hover {
+  background: rgba(255, 184, 77, 0.18);
+  box-shadow: var(--glow-warm);
 }
 
 .formulas-grid {
@@ -205,10 +237,16 @@
   overflow-x: auto;
   padding: 1rem;
   border-radius: 18px;
-  border: 1px solid rgba(31, 78, 104, 0.12);
-  background: rgba(7, 17, 27, 0.84);
-  color: var(--accent);
+  border: 1px solid rgba(74, 133, 168, 0.16);
+  background: rgba(7, 17, 27, 0.88);
+  color: var(--accent-cyan);
   font-size: 0.9rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.formula:hover {
+  border-color: rgba(74, 133, 168, 0.3);
+  box-shadow: var(--glow-cyan);
 }
 
 .facts-grid {
@@ -220,8 +258,15 @@
   gap: 0.85rem;
   padding: 1.1rem;
   border-radius: 22px;
-  border: 1px solid rgba(153, 179, 206, 0.1);
-  background: rgba(8, 18, 29, 0.72);
+  border: 1px solid rgba(153, 179, 206, 0.12);
+  background: rgba(8, 18, 29, 0.78);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.fact-item:hover {
+  border-color: rgba(74, 133, 168, 0.28);
+  background: rgba(12, 26, 40, 0.9);
+  box-shadow: var(--glow-blue);
 }
 
 .fact-icon {
@@ -231,8 +276,15 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(31, 78, 104, 0.12);
-  color: var(--accent);
+  background: rgba(74, 133, 168, 0.14);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(74, 133, 168, 0.18);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fact-item:hover .fact-icon {
+  background: rgba(74, 133, 168, 0.24);
+  box-shadow: var(--glow-cyan);
 }
 
 .fact-item h3 {

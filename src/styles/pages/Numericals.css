@@ -14,6 +14,8 @@
   gap: 1rem;
 }
 
+/* ── Tab buttons ────────────────────────────────────────── */
+
 .tabs-container {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -28,29 +30,52 @@
   border-radius: 24px;
   border: 1px solid var(--line);
   background:
-    linear-gradient(180deg, rgba(14, 27, 41, 0.95), rgba(8, 18, 30, 0.98)),
-    var(--surface);
+    linear-gradient(180deg, rgba(14, 27, 41, 0.97), rgba(8, 18, 30, 0.99));
   color: var(--muted);
   cursor: pointer;
   text-align: left;
   transition:
-    transform 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease,
-    box-shadow 0.2s ease;
+    transform 0.25s var(--ease-spring),
+    border-color 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
   box-shadow: var(--card-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.tab-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: radial-gradient(ellipse at top left, rgba(74, 133, 168, 0.1), transparent 60%);
+  transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .tab-button:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   color: var(--text);
-  border-color: rgba(31, 78, 104, 0.2);
+  border-color: rgba(74, 133, 168, 0.24);
+  box-shadow: var(--card-shadow), 0 8px 24px rgba(74, 133, 168, 0.1);
+}
+
+.tab-button:hover::before {
+  opacity: 1;
 }
 
 .tab-button.active {
   color: var(--text);
-  border-color: rgba(31, 78, 104, 0.24);
-  box-shadow: 0 24px 48px rgba(31, 78, 104, 0.14);
+  border-color: rgba(74, 133, 168, 0.3);
+  box-shadow: 0 24px 48px rgba(74, 133, 168, 0.16), var(--glow-blue);
+  background:
+    linear-gradient(145deg, rgba(18, 36, 56, 0.97), rgba(10, 22, 38, 0.99));
+}
+
+.tab-button.active::before {
+  opacity: 1;
 }
 
 .tab-icon {
@@ -60,9 +85,17 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(31, 78, 104, 0.1);
-  color: var(--accent);
+  background: rgba(74, 133, 168, 0.12);
+  color: var(--accent-cyan);
   flex-shrink: 0;
+  border: 1px solid rgba(74, 133, 168, 0.18);
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.tab-button:hover .tab-icon,
+.tab-button.active .tab-icon {
+  background: rgba(74, 133, 168, 0.22);
+  box-shadow: var(--glow-cyan);
 }
 
 .tab-copy {
@@ -83,6 +116,8 @@
   text-transform: uppercase;
 }
 
+/* ── Layout ─────────────────────────────────────────────── */
+
 .numericals-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
@@ -101,6 +136,8 @@
   display: flex;
 }
 
+/* ── Reference panel ────────────────────────────────────── */
+
 .reference-grid {
   display: grid;
   gap: 0.9rem;
@@ -111,8 +148,15 @@
   gap: 0.55rem;
   padding: 1rem;
   border-radius: 22px;
-  border: 1px solid rgba(153, 179, 206, 0.1);
-  background: rgba(8, 18, 29, 0.72);
+  border: 1px solid rgba(153, 179, 206, 0.12);
+  background: rgba(8, 18, 29, 0.78);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.reference-item:hover {
+  border-color: rgba(74, 133, 168, 0.28);
+  background: rgba(12, 26, 40, 0.9);
+  box-shadow: var(--glow-blue);
 }
 
 .reference-item strong {
@@ -129,11 +173,19 @@
   overflow-x: auto;
   padding: 0.9rem;
   border-radius: 16px;
-  border: 1px solid rgba(31, 78, 104, 0.12);
-  background: rgba(7, 17, 27, 0.82);
-  color: var(--accent);
+  border: 1px solid rgba(74, 133, 168, 0.16);
+  background: rgba(7, 17, 27, 0.88);
+  color: var(--accent-cyan);
   font-size: 0.86rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
+
+.reference-item:hover code {
+  border-color: rgba(74, 133, 168, 0.28);
+  box-shadow: var(--glow-cyan);
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
 
 @media (max-width: 1080px) {
   .numericals-layout {

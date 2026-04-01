@@ -1,21 +1,31 @@
 @import './DelayCalculator.css';
 
 .calculator--snr .calculator-badge {
-  background: rgba(91, 231, 161, 0.12);
-  color: var(--success);
+  background: rgba(52, 211, 153, 0.14);
+  color: var(--accent-emerald);
+  border: 1px solid rgba(52, 211, 153, 0.2);
 }
 
 .calculator--snr .formula-box {
-  border-color: rgba(91, 231, 161, 0.18);
+  border-color: rgba(52, 211, 153, 0.2);
+}
+
+.calculator--snr .formula-box p {
+  color: var(--accent-emerald);
+}
+
+.calculator--snr .formula-box:hover {
+  border-color: rgba(52, 211, 153, 0.34);
+  box-shadow: var(--glow-emerald);
 }
 
 .calculator--snr .result-card.featured {
-  border-color: rgba(91, 231, 161, 0.2);
+  border-color: rgba(52, 211, 153, 0.22);
   background:
-    radial-gradient(circle at top right, rgba(91, 231, 161, 0.14), transparent 48%),
-    rgba(9, 20, 31, 0.86);
+    radial-gradient(ellipse at top right, rgba(52, 211, 153, 0.14), transparent 50%),
+    rgba(9, 20, 31, 0.9);
 }
 
 .calculator--snr .result-card strong {
-  color: var(--success);
+  color: var(--accent-emerald);
 }

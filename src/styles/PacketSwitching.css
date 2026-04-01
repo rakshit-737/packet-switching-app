@@ -8,10 +8,11 @@
   gap: 0.9rem;
   padding: 1.4rem;
   border-radius: 30px;
-  border: 1px solid rgba(31, 78, 104, 0.14);
+  border: 1px solid rgba(74, 133, 168, 0.18);
   background:
-    radial-gradient(circle at top right, rgba(31, 78, 104, 0.12), transparent 30%),
-    linear-gradient(180deg, rgba(12, 25, 39, 0.94), rgba(8, 18, 29, 0.98));
+    radial-gradient(ellipse at top right, rgba(74, 133, 168, 0.14), transparent 40%),
+    radial-gradient(ellipse at bottom left, rgba(34, 211, 238, 0.07), transparent 50%),
+    linear-gradient(180deg, rgba(12, 25, 39, 0.96), rgba(8, 18, 29, 0.99));
   box-shadow: var(--card-shadow);
 }
 
@@ -19,6 +20,10 @@
   font-size: clamp(2.2rem, 5vw, 4rem);
   line-height: 0.95;
   letter-spacing: -0.06em;
+  background: linear-gradient(135deg, var(--text) 40%, var(--accent-cyan) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .packet-switching-page .page-header p {
@@ -44,13 +49,18 @@
   padding: 1rem;
   border: 1px solid var(--line);
   background:
-    radial-gradient(circle at top, rgba(31, 78, 104, 0.08), transparent 36%),
-    rgba(7, 17, 27, 0.9);
+    radial-gradient(ellipse at top, rgba(74, 133, 168, 0.1), transparent 40%),
+    rgba(7, 17, 27, 0.92);
   min-height: 440px;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: var(--card-shadow);
+  transition: box-shadow 0.3s ease;
+}
+
+.packet-switching-page .canvas-wrapper:hover {
+  box-shadow: var(--card-shadow), var(--glow-cyan);
 }
 
 .packet-switching-page .control-panel,
@@ -85,9 +95,9 @@
   min-width: 64px;
   padding: 0.55rem 0.7rem;
   border-radius: 14px;
-  border: 1px solid rgba(31, 78, 104, 0.14);
-  background: rgba(7, 17, 27, 0.84);
-  color: var(--accent);
+  border: 1px solid rgba(74, 133, 168, 0.2);
+  background: rgba(7, 17, 27, 0.88);
+  color: var(--accent-cyan);
   text-align: center;
   font-family: 'IBM Plex Mono', monospace;
 }
@@ -107,12 +117,18 @@
   gap: 0.85rem;
   padding: 1rem;
   border-radius: 22px;
-  border: 1px solid rgba(31, 78, 104, 0.12);
-  background: rgba(7, 17, 27, 0.82);
+  border: 1px solid rgba(74, 133, 168, 0.16);
+  background: rgba(7, 17, 27, 0.86);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.packet-switching-page .info-box:hover {
+  border-color: rgba(74, 133, 168, 0.28);
+  box-shadow: var(--glow-cyan);
 }
 
 .packet-switching-page .info-box h4 {
-  color: var(--accent);
+  color: var(--accent-cyan);
   font-size: 0.92rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -140,8 +156,8 @@
   width: 0.42rem;
   height: 0.42rem;
   border-radius: 999px;
-  background: var(--accent);
-  box-shadow: 0 0 14px rgba(31, 78, 104, 0.4);
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent));
+  box-shadow: 0 0 10px rgba(34, 211, 238, 0.3);
 }
 
 .packet-switching-page .metrics-grid {
@@ -155,8 +171,14 @@
   gap: 0.45rem;
   padding: 1rem;
   border-radius: 20px;
-  border: 1px solid rgba(31, 78, 104, 0.12);
-  background: rgba(7, 17, 27, 0.82);
+  border: 1px solid rgba(74, 133, 168, 0.14);
+  background: rgba(7, 17, 27, 0.86);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.packet-switching-page .metric-box:hover {
+  border-color: rgba(74, 133, 168, 0.26);
+  box-shadow: var(--glow-cyan);
 }
 
 .packet-switching-page .metric-label {
@@ -168,7 +190,7 @@
 }
 
 .packet-switching-page .metric-value {
-  color: var(--accent);
+  color: var(--accent-cyan);
   font-size: 1.15rem;
   font-weight: 700;
 }

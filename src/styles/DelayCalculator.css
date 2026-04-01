@@ -4,8 +4,13 @@
   gap: 1.15rem;
   padding: 1.35rem;
   border-radius: 28px;
-  border: 1px solid rgba(153, 179, 206, 0.12);
-  background: rgba(8, 18, 29, 0.72);
+  border: 1px solid rgba(153, 179, 206, 0.14);
+  background: rgba(8, 18, 29, 0.8);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.calculator:hover {
+  border-color: rgba(74, 133, 168, 0.26);
 }
 
 .calculator-header {
@@ -20,6 +25,10 @@
   font-size: 1.6rem;
   line-height: 1.05;
   letter-spacing: -0.05em;
+  background: linear-gradient(135deg, var(--text) 50%, var(--muted-strong) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .calculator-header p {
@@ -46,12 +55,18 @@
   gap: 0.45rem;
   padding: 1rem 1.1rem;
   border-radius: 22px;
-  border: 1px solid rgba(31, 78, 104, 0.16);
-  background: rgba(7, 17, 27, 0.82);
+  border: 1px solid rgba(74, 133, 168, 0.2);
+  background: rgba(7, 17, 27, 0.88);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.formula-box:hover {
+  border-color: rgba(74, 133, 168, 0.34);
+  box-shadow: var(--glow-cyan);
 }
 
 .formula-box p {
-  color: var(--accent);
+  color: var(--accent-cyan);
   line-height: 1.7;
   font-family: 'IBM Plex Mono', monospace;
   font-size: 0.92rem;
@@ -82,8 +97,8 @@
   gap: 0.7rem;
   padding: 0.95rem 1rem;
   border-radius: 20px;
-  border: 1px solid rgba(255, 109, 122, 0.22);
-  background: rgba(68, 16, 24, 0.34);
+  border: 1px solid rgba(255, 109, 122, 0.26);
+  background: rgba(68, 16, 24, 0.38);
   color: #ffb7be;
   line-height: 1.6;
 }
@@ -103,8 +118,14 @@
   gap: 1rem;
   padding: 1rem;
   border-radius: 24px;
-  border: 1px solid rgba(31, 78, 104, 0.14);
-  background: rgba(7, 17, 27, 0.8);
+  border: 1px solid rgba(74, 133, 168, 0.18);
+  background: rgba(7, 17, 27, 0.86);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.result-box:hover {
+  border-color: rgba(74, 133, 168, 0.3);
+  box-shadow: var(--glow-blue);
 }
 
 .result-header {
@@ -129,8 +150,14 @@
   gap: 0.55rem;
   padding: 1rem;
   border-radius: 22px;
-  border: 1px solid rgba(153, 179, 206, 0.1);
-  background: rgba(9, 20, 31, 0.82);
+  border: 1px solid rgba(153, 179, 206, 0.12);
+  background: rgba(9, 20, 31, 0.88);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.result-card:hover {
+  border-color: rgba(153, 179, 206, 0.22);
+  background: rgba(13, 28, 44, 0.92);
 }
 
 .result-card span {
@@ -152,19 +179,20 @@
 }
 
 .result-card.featured {
-  border-color: rgba(31, 78, 104, 0.2);
+  border-color: rgba(74, 133, 168, 0.24);
   background:
-    radial-gradient(circle at top right, rgba(31, 78, 104, 0.14), transparent 48%),
-    rgba(9, 20, 31, 0.86);
+    radial-gradient(ellipse at top right, rgba(74, 133, 168, 0.16), transparent 50%),
+    rgba(9, 20, 31, 0.9);
 }
 
 .calculator--delay .calculator-badge {
-  background: rgba(31, 78, 104, 0.12);
-  color: var(--accent);
+  background: rgba(74, 133, 168, 0.14);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(74, 133, 168, 0.2);
 }
 
 .calculator--delay .result-card strong {
-  color: var(--accent);
+  color: var(--accent-cyan);
 }
 
 @media (max-width: 768px) {
