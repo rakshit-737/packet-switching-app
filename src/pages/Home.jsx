@@ -93,7 +93,6 @@ export default function Home() {
     : { initial: 'hidden', animate: 'visible', variants: staggerContainer }
 
   const itemProps = prefersReducedMotion ? {} : { variants: fadeUp }
-  const scaleProps = prefersReducedMotion ? {} : { variants: scaleIn }
 
   const viewportProps = prefersReducedMotion
     ? {}

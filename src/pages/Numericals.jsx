@@ -1,9 +1,17 @@
 import { useState } from 'react'
 import { Activity, Clock3, Signal } from 'lucide-react'
+import { motion, useReducedMotion } from 'framer-motion'
 import DelayCalculator from '../components/DelayCalculator'
 import SNRCalculator from '../components/SNRCalculator'
 import ThroughputCalculator from '../components/ThroughputCalculator'
 import '../styles/pages/Numericals.css'
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 18 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] } },
+}
+const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }
+const viewOnce = { once: true, margin: '-50px' }
 
 const tabs = [
   {
@@ -39,34 +47,40 @@ const references = [
 export default function Numericals() {
   const [activeTab, setActiveTab] = useState('delay')
   const activeSolver = tabs.find((tab) => tab.id === activeTab) ?? tabs[0]
+  const prefersReducedMotion = useReducedMotion()
+  const mv = (variants) =>
+    prefersReducedMotion ? {} : { initial: 'hidden', whileInView: 'visible', viewport: viewOnce, variants }
 
   return (
     <div className="numericals-page">
-      <section className="page-hero numericals-hero">
-        <span className="section-eyebrow">Problem solving lab</span>
-        <h1>Practice the formulas without losing the intuition behind them.</h1>
-        <p>
+      <motion.section
+        className="page-hero numericals-hero"
+        {...(prefersReducedMotion ? {} : { initial: 'hidden', animate: 'visible', variants: stagger })}
+      >
+        <motion.span className="section-eyebrow" {...(prefersReducedMotion ? {} : { variants: fadeUp })}>Problem solving lab</motion.span>
+        <motion.h1 {...(prefersReducedMotion ? {} : { variants: fadeUp })}>Practice the formulas without losing the intuition behind them.</motion.h1>
+        <motion.p {...(prefersReducedMotion ? {} : { variants: fadeUp })}>
           Pick a solver, enter the values, and get a cleaner read on the result so you can spend time understanding the
           output instead of wrestling the interface.
-        </p>
+        </motion.p>
 
-        <div className="numericals-pill-row">
-          <div className="data-pill">
+        <motion.div className="numericals-pill-row" {...(prefersReducedMotion ? {} : { variants: stagger })}>
+          <motion.div className="data-pill" {...(prefersReducedMotion ? {} : { variants: fadeUp })}>
             <strong>3</strong>
             <span>active solvers</span>
-          </div>
-          <div className="data-pill">
+          </motion.div>
+          <motion.div className="data-pill" {...(prefersReducedMotion ? {} : { variants: fadeUp })}>
             <strong>Live</strong>
             <span>instant recompute flow</span>
-          </div>
-          <div className="data-pill">
+          </motion.div>
+          <motion.div className="data-pill" {...(prefersReducedMotion ? {} : { variants: fadeUp })}>
             <strong>Exam</strong>
             <span>focused formulas</span>
-          </div>
-        </div>
-      </section>
+          </motion.div>
+        </motion.div>
+      </motion.section>
 
-      <section className="numericals-shell">
+      <motion.section className="numericals-shell" {...mv(fadeUp)}>
         <div className="tabs-container" role="tablist" aria-label="Numerical solvers">
           {tabs.map(({ id, label, caption, icon: Icon }) => (
             <button
@@ -120,7 +134,7 @@ export default function Numericals() {
             </div>
           </aside>
         </div>
-      </section>
+      </motion.section>
     </div>
   )
 }
