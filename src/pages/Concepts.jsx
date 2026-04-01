@@ -1,6 +1,14 @@
 import { networkConcepts, formulas } from '../utils/formulas'
 import { BookOpen, Code2, Radio, Zap } from 'lucide-react'
+import { motion, useReducedMotion } from 'framer-motion'
 import '../styles/pages/Concepts.css'
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 18 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] } },
+}
+const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.09 } } }
+const viewOnce = { once: true, margin: '-50px' }
 
 const formulaOrder = ['delay', 'throughput', 'snr', 'bandwidth']
 
@@ -43,27 +51,33 @@ const formulaCards = formulaOrder.map((key) => ({
 }))
 
 export default function Concepts() {
+  const prefersReducedMotion = useReducedMotion()
+  const mv = (variants) => (prefersReducedMotion ? {} : { initial: 'hidden', whileInView: 'visible', viewport: viewOnce, variants })
+
   return (
     <div className="concepts-page">
-      <section className="page-hero concepts-hero">
-        <span className="section-eyebrow">Concept atlas</span>
-        <h1>Understand when each switching model actually wins.</h1>
-        <p>
+      <motion.section
+        className="page-hero concepts-hero"
+        {...(prefersReducedMotion ? {} : { initial: 'hidden', animate: 'visible', variants: stagger })}
+      >
+        <motion.span className="section-eyebrow" {...(prefersReducedMotion ? {} : { variants: fadeUp })}>Concept atlas</motion.span>
+        <motion.h1 {...(prefersReducedMotion ? {} : { variants: fadeUp })}>Understand when each switching model actually wins.</motion.h1>
+        <motion.p {...(prefersReducedMotion ? {} : { variants: fadeUp })}>
           Use this page as the mental map for the whole app: compare behaviors, scan the formulas, then jump into the
           simulator or solver when you want to see the ideas in action.
-        </p>
+        </motion.p>
 
-        <div className="concepts-stat-row">
+        <motion.div className="concepts-stat-row" {...(prefersReducedMotion ? {} : { variants: stagger })}>
           {summaryStats.map((item) => (
-            <div key={item.label} className="data-pill">
+            <motion.div key={item.label} className="data-pill" {...(prefersReducedMotion ? {} : { variants: fadeUp })}>
               <strong>{item.value}</strong>
               <span>{item.label}</span>
-            </div>
+            </motion.div>
           ))}
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
-      <section className="comparison-section card">
+      <motion.section className="comparison-section card" {...mv(fadeUp)}>
         <div className="section-heading">
           <span className="section-eyebrow">Main comparison</span>
           <h2>Circuit switching optimizes predictability. Packet switching optimizes sharing.</h2>
@@ -137,18 +151,18 @@ export default function Concepts() {
             </tbody>
           </table>
         </div>
-      </section>
+      </motion.section>
 
-      <section className="concepts-section">
-        <div className="section-heading">
+      <motion.section className="concepts-section" {...mv(stagger)}>
+        <motion.div className="section-heading" {...(prefersReducedMotion ? {} : { variants: fadeUp })}>
           <span className="section-eyebrow">Core ideas</span>
           <h2>Use the cards below as your conceptual checklist.</h2>
           <p>Each card distills the definition, the important characteristics, and a few memorable examples.</p>
-        </div>
+        </motion.div>
 
-        <div className="concepts-grid">
+        <motion.div className="concepts-grid" {...(prefersReducedMotion ? {} : { variants: stagger })}>
           {networkConcepts.map((concept) => (
-            <article key={concept.id} className="concept-card card">
+            <motion.article key={concept.id} className="concept-card card" {...(prefersReducedMotion ? {} : { variants: fadeUp })}>
               <div className="concept-card-header">
                 <span className="concept-index">{String(concept.id).padStart(2, '0')}</span>
                 <h3>{concept.title}</h3>
@@ -177,21 +191,21 @@ export default function Concepts() {
                   </div>
                 </div>
               )}
-            </article>
+            </motion.article>
           ))}
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
-      <section className="formulas-section">
-        <div className="section-heading">
+      <motion.section className="formulas-section" {...mv(stagger)}>
+        <motion.div className="section-heading" {...(prefersReducedMotion ? {} : { variants: fadeUp })}>
           <span className="section-eyebrow">Formula reference</span>
           <h2>Keep the equations nearby while you work the numbers.</h2>
           <p>These cards are designed to bridge the conceptual page and the numerical solver page.</p>
-        </div>
+        </motion.div>
 
-        <div className="formulas-grid">
+        <motion.div className="formulas-grid" {...(prefersReducedMotion ? {} : { variants: stagger })}>
           {formulaCards.map((formula, index) => (
-            <article key={formula.key} className="formula-card card">
+            <motion.article key={formula.key} className="formula-card card" {...(prefersReducedMotion ? {} : { variants: fadeUp })}>
               <div className="formula-card-header">
                 <span className="formula-index">{String(index + 1).padStart(2, '0')}</span>
                 <div>
@@ -207,30 +221,30 @@ export default function Concepts() {
                   <li key={component}>{component}</li>
                 ))}
               </ul>
-            </article>
+            </motion.article>
           ))}
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
-      <section className="quick-facts card">
-        <div className="section-heading">
+      <motion.section className="quick-facts card" {...mv(stagger)}>
+        <motion.div className="section-heading" {...(prefersReducedMotion ? {} : { variants: fadeUp })}>
           <span className="section-eyebrow">Quick facts</span>
           <h2>Memorable reminders for revision day.</h2>
           <p>Use these as short verbal cues when you want to recall the core behavior fast.</p>
-        </div>
+        </motion.div>
 
-        <div className="facts-grid">
+        <motion.div className="facts-grid" {...(prefersReducedMotion ? {} : { variants: stagger })}>
           {quickFacts.map(({ icon: Icon, title, description }) => (
-            <article key={title} className="fact-item">
+            <motion.article key={title} className="fact-item" {...(prefersReducedMotion ? {} : { variants: fadeUp })}>
               <span className="fact-icon">
                 <Icon size={20} />
               </span>
               <h3>{title}</h3>
               <p>{description}</p>
-            </article>
+            </motion.article>
           ))}
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
     </div>
   )
 }

@@ -1,31 +1,29 @@
-# NetSwitch — Interactive Networking Simulator
+# NetSwitch — Interactive Networking Lab
 
-A modern, educational web application for understanding circuit and packet switching networks through interactive visualizations.
+A modern, educational web application for learning packet switching and circuit switching through interactive simulations, formula solvers, and concept breakdowns.
 
 ## Features
 
 ✨ **Interactive Visualizations**
-- Real-time animation of circuit switching with dedicated channels
-- Packet switching simulator showing independent packet routing
-- Live delay and latency simulation
-- Dynamic network topology rendering
+- Unified visualizer: switch between packet and circuit modes in one view
+- Canvas-based real-time animation of dedicated lanes and independent packet flows
+- Live playback speed control, configurable packet/call parameters
 
 📚 **Educational Content**
-- Clear explanations of switching techniques
-- Comparison tables
-- Key metrics and characteristics
+- Concept Atlas: comparison table, core concept cards, formula reference, quick-fact reminders
+- Numerical Solvers: delay, SNR, and throughput calculators with instant recompute
+- Side-by-side tradeoff summaries on the Home page
 
 🎨 **Modern UI/UX**
-- Dark theme optimized for learning
-- Responsive design
-- Smooth animations
-- Interactive controls
+- Cinematic BootSequence entry overlay (`prefers-reduced-motion` aware)
+- Scroll-reactive navbar (hides on scroll-down, reveals on scroll-up)
+- Staggered Framer Motion page entries and scroll-triggered section reveals on all four pages
+- Dark theme, CSS custom-property design tokens, responsive layout
 
 ⚡ **Performance**
-- Vite for fast development
-- Canvas-based rendering
-- Optimized bundle size
-- Code splitting
+- Vite build with automatic code splitting
+- All motion uses `transform`/`opacity` only (GPU composited)
+- Canvas rendering isolated from React re-renders
 
 ## Tech Stack
 
@@ -34,14 +32,14 @@ A modern, educational web application for understanding circuit and packet switc
 - **Build Tool**: Vite
 - **Animation**: Framer Motion
 - **Icons**: Lucide React
-- **Styling**: CSS3 + CSS Variables
+- **Styling**: CSS3 + CSS custom properties
 - **Canvas**: Vanilla JS Canvas API
 
 ## Getting Started
 
 ### Prerequisites
-- Node.js 16+ 
-- npm or yarn
+- Node.js 16+
+- npm
 
 ### Installation
 
@@ -67,55 +65,55 @@ npm run preview
 
 ```
 src/
-├── components/          # Reusable React components
-│   ├── CircuitCanvas.jsx
-│   └── PacketCanvas.jsx
-├── pages/              # Page components
-│   ├── Home.jsx
-│   ├── CircuitSwitching.jsx
-│   └── PacketSwitching.jsx
-├── styles/             # Page-specific styles
+├── components/              # Reusable React components
+│   ├── BootSequence.jsx     # Cinematic entry overlay
+│   ├── CircuitCanvas.jsx    # Canvas renderer — circuit switching
+│   ├── PacketCanvas.jsx     # Canvas renderer — packet switching
+│   ├── Navbar.jsx           # Scroll-reactive top navigation
+│   ├── DelayCalculator.jsx  # Transmission + propagation delay solver
+│   ├── SNRCalculator.jsx    # SNR / Shannon capacity solver
+│   └── ThroughputCalculator.jsx  # Loss-aware throughput solver
+├── pages/                   # Route-level page components
+│   ├── Home.jsx             # Landing page with hero + learning-path cards
+│   ├── Concepts.jsx         # Concept Atlas: comparison, cards, formulas, facts
+│   ├── Visualizer.jsx       # Combined packet / circuit switching simulator
+│   └── Numericals.jsx       # Numerical solver lab (3 calculators)
+├── styles/                  # Component-scoped CSS
+│   ├── Navbar.css
 │   ├── Home.css
-│   ├── CircuitSwitching.css
-│   └── PacketSwitching.css
-├── utils/              # Utility functions & visualizers
+│   ├── DelayCalculator.css
+│   ├── SNRCalculator.css
+│   ├── ThroughputCalculator.css
+│   └── pages/               # Page-level CSS
+│       ├── Concepts.css
+│       ├── Numericals.css
+│       └── Visualizer.css
+├── utils/                   # Canvas drawing utilities & data
 │   ├── circuitVisualizer.js
-│   └── packetVisualizer.js
-├── App.jsx             # Main app component with routing
-├── App.css             # Global app styles
-├── main.jsx            # React entry point
-└── styles.css          # Global variables & styles
+│   ├── packetVisualizer.js
+│   └── formulas.js          # Concept definitions and formula metadata
+├── App.jsx                  # Root: routing, BootSequence, footer
+├── App.css                  # App shell layout
+├── main.jsx                 # React entry point
+└── styles.css               # Global tokens, typography, keyframes
 ```
 
-## Features Breakdown
+## Pages
 
-### Home Page
-- Hero section with gradient text
-- Three feature cards (Concepts, Visualizer, Numericals)
-- Feature highlights
-- Comparison table
+### Home (`/`)
+Entry point with animated hero, switching-model comparison, three learning-path cards, and a feature highlight section.
 
-### Circuit Switching Simulator
-- Dedicated connection visualization
-- Adjustable simulation speed
-- Multiple simultaneous calls
-- Real-time metrics
+### Concept Atlas (`/concepts`)
+Full concept reference: packet vs. circuit comparison table, core concept cards (circuit switching, packet switching, message switching, multiplexing), formula cards, and quick-fact reminders.
 
-### Packet Switching Simulator
-- Independent packet routing
-- Configurable packet sizes
-- Network topology with 8 nodes
-- Packet tracking
+### Visualizer (`/visualizer`)
+Unified interactive simulator. Toggle between **Packet Switching** (shared mesh, dynamic routing) and **Circuit Switching** (dedicated lanes, reserved capacity). Configurable speed, data size, packet size, and number of calls. Playback and reset controls.
 
-## Keyboard Shortcuts
-- Coming soon...
-
-## Performance Optimizations
-- Code splitting for vendor libraries
-- CSS variables for theming
-- Efficient canvas rendering
-- Debounced event handlers
-- Lazy component loading
+### Numericals (`/numericals`)
+Three tab-based solvers:
+- **Delay** — transmission + propagation delay breakdown
+- **SNR** — linear SNR, dB conversion, Shannon capacity
+- **Throughput** — effective throughput with configurable packet loss
 
 ## Browser Support
 - Chrome/Edge 90+
@@ -123,13 +121,10 @@ src/
 - Safari 14+
 
 ## Contributing
-Contributions welcome! Please feel free to submit PRs.
+Contributions welcome! Please feel free to submit a PR.
 
 ## License
 MIT
-
-## Support
-For issues and questions, please open an issue on GitHub.
 
 ---
 

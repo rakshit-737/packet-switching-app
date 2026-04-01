@@ -1,8 +1,16 @@
 import { useMemo, useState } from 'react'
 import { Activity, Network, Pause, Play, Radio, RotateCcw, Zap } from 'lucide-react'
+import { motion, useReducedMotion } from 'framer-motion'
 import PacketCanvas from '../components/PacketCanvas'
 import CircuitCanvas from '../components/CircuitCanvas'
 import '../styles/pages/Visualizer.css'
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 18 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] } },
+}
+const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }
+const viewOnce = { once: true, margin: '-50px' }
 
 const MODE_CONTENT = {
   packet: {
@@ -105,23 +113,31 @@ export default function Visualizer() {
     setNumCalls(clampToStep(rawValue, numCalls, 1, 6))
   }
 
+  const prefersReducedMotion = useReducedMotion()
+  const mv = (variants) =>
+    prefersReducedMotion ? {} : { initial: 'hidden', whileInView: 'visible', viewport: viewOnce, variants }
+
   return (
     <div className="visualizer-page">
-      <section className="visualizer-hero">
-        <div className="hero-copy">
+      <motion.section
+        className="visualizer-hero"
+        {...(prefersReducedMotion ? {} : { initial: 'hidden', animate: 'visible', variants: stagger })}
+      >
+        <motion.div className="hero-copy" {...(prefersReducedMotion ? {} : { variants: fadeUp })}>
           <span className="hero-kicker">Interactive Lab</span>
           <h1>See switching behavior instead of just memorizing it.</h1>
           <p>
             Compare how packet switching and circuit switching behave under live traffic, then tune the load to
             understand the tradeoffs that show up in exams and real networks.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="mode-switcher">
-          <button
+        <motion.div className="mode-switcher" {...(prefersReducedMotion ? {} : { variants: stagger })}>
+          <motion.button
             type="button"
             className={`mode-card ${mode === 'packet' ? 'active' : ''}`}
             onClick={() => switchMode('packet')}
+            {...(prefersReducedMotion ? {} : { variants: fadeUp, whileHover: { y: -3 }, whileTap: { scale: 0.97 } })}
           >
             <div className="mode-card-header">
               <span className="mode-icon packet">
@@ -131,12 +147,13 @@ export default function Visualizer() {
             </div>
             <h2>Packet Switching</h2>
             <p>{MODE_CONTENT.packet.heroDescription}</p>
-          </button>
+          </motion.button>
 
-          <button
+          <motion.button
             type="button"
             className={`mode-card ${mode === 'circuit' ? 'active' : ''}`}
             onClick={() => switchMode('circuit')}
+            {...(prefersReducedMotion ? {} : { variants: fadeUp, whileHover: { y: -3 }, whileTap: { scale: 0.97 } })}
           >
             <div className="mode-card-header">
               <span className="mode-icon circuit">
@@ -146,12 +163,12 @@ export default function Visualizer() {
             </div>
             <h2>Circuit Switching</h2>
             <p>{MODE_CONTENT.circuit.heroDescription}</p>
-          </button>
-        </div>
-      </section>
+          </motion.button>
+        </motion.div>
+      </motion.section>
 
-      <div className="visualizer-layout">
-        <section className="stage-card card">
+      <motion.div className="visualizer-layout" {...mv(stagger)}>
+        <motion.section className="stage-card card" {...(prefersReducedMotion ? {} : { variants: fadeUp })}>
           <div className="stage-header">
             <div>
               <span className="stage-kicker">{currentMode.badge}</span>
@@ -192,9 +209,9 @@ export default function Visualizer() {
               </div>
             ))}
           </div>
-        </section>
+        </motion.section>
 
-        <aside className="control-card card">
+        <motion.aside className="control-card card" {...(prefersReducedMotion ? {} : { variants: fadeUp })}>
           <div className="control-block">
             <label htmlFor="speed-slider">Playback Speed</label>
             <div className="slider-row">
@@ -214,7 +231,7 @@ export default function Visualizer() {
           {mode === 'packet' ? (
             <>
               <div className="control-block">
-                <label htmlFor="data-size-input">Total Data Size</label>
+                <label htmlFor="data-size-input">Total Data Size (bytes)</label>
                 <input
                   id="data-size-input"
                   type="number"
@@ -225,10 +242,11 @@ export default function Visualizer() {
                   disabled={isRunning}
                   onChange={(event) => handleDataSizeChange(event.target.value)}
                 />
+                <small>Adjust before starting the simulation. Disabled while running.</small>
               </div>
 
               <div className="control-block">
-                <label htmlFor="packet-size-input">Packet Size</label>
+                <label htmlFor="packet-size-input">Packet Size (bytes)</label>
                 <input
                   id="packet-size-input"
                   type="number"
@@ -282,24 +300,27 @@ export default function Visualizer() {
               ))}
             </div>
           </div>
-        </aside>
-      </div>
+        </motion.aside>
+      </motion.div>
 
-      <section className="visualizer-stats">
+      <motion.section className="visualizer-stats" {...mv(stagger)}>
         {stats.map((stat) => (
-          <StatCard key={stat.label} {...stat} />
+          <StatCard key={stat.label} prefersReducedMotion={prefersReducedMotion} {...stat} />
         ))}
-      </section>
+      </motion.section>
     </div>
   )
 }
 
-function StatCard({ label, value, accent }) {
+function StatCard({ label, value, accent, prefersReducedMotion }) {
   return (
-    <div className={`stat-card ${accent}`}>
+    <motion.div
+      className={`stat-card ${accent}`}
+      {...(prefersReducedMotion ? {} : { variants: fadeUp })}
+    >
       <span className="stat-label">{label}</span>
       <span className="stat-value">{value}</span>
-    </div>
+    </motion.div>
   )
 }
 
