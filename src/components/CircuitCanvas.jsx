@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { drawCircuitSwitching } from '../utils/circuitVisualizer'
 
-const CALL_COLORS = ['#1f5e69', '#24546f', '#34d399', '#f59e0b', '#fb7185', '#a78bfa']
+const CALL_COLORS = ['#22d3ee', '#38bdf8', '#34d399', '#f59e0b', '#fb7185', '#a78bfa']
 const CALL_BANDWIDTHS = [64, 128, 128, 256, 256, 512]
 const CANVAS_ASPECT_RATIO = 16 / 10
 const MAX_CANVAS_WIDTH = 960

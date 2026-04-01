@@ -1,4 +1,4 @@
-const CALL_COLORS = ['#1f5e69', '#24546f', '#34d399', '#f59e0b', '#fb7185', '#a78bfa']
+const CALL_COLORS = ['#22d3ee', '#38bdf8', '#34d399', '#f59e0b', '#fb7185', '#a78bfa']
 
 export function drawCircuitSwitching(ctx, width, height, calls, time, options = {}) {
   if (!ctx) return

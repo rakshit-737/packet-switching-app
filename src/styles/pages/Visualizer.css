@@ -1,3 +1,270 @@
+/* ─── Page Layout ─────────────────────────────────────────── */
+.visualizer-page {
+  display: grid;
+  gap: 1.8rem;
+}
+
+/* ─── Hero Section ───────────────────────────────────────── */
+.visualizer-hero {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 1.4rem;
+  align-items: start;
+}
+
+.hero-copy {
+  display: grid;
+  gap: 1rem;
+}
+
+.hero-kicker {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.42rem 0.88rem;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 78, 104, 0.22);
+  background: rgba(7, 28, 43, 0.72);
+  color: var(--accent);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hero-copy h1 {
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.05em;
+}
+
+.hero-copy p {
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 46rem;
+}
+
+/* ─── Mode Switcher ──────────────────────────────────────── */
+.mode-switcher {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+}
+
+.mode-card {
+  display: grid;
+  gap: 0.85rem;
+  padding: 1.25rem;
+  border-radius: 24px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(14, 27, 41, 0.94), rgba(7, 17, 28, 0.98));
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+  box-shadow: var(--card-shadow);
+}
+
+.mode-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(31, 78, 104, 0.28);
+}
+
+.mode-card.active {
+  border-color: rgba(31, 78, 104, 0.42);
+  box-shadow: 0 24px 48px rgba(31, 78, 104, 0.2);
+  background: linear-gradient(180deg, rgba(18, 38, 58, 0.97), rgba(9, 22, 38, 0.99));
+}
+
+.mode-card h2 {
+  font-size: 1.1rem;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.mode-card p {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+.mode-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.mode-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mode-icon.packet {
+  background: rgba(56, 189, 248, 0.14);
+  color: #38bdf8;
+}
+
+.mode-icon.circuit {
+  background: rgba(52, 211, 153, 0.12);
+  color: #34d399;
+}
+
+.mode-badge {
+  padding: 0.3rem 0.72rem;
+  border-radius: 999px;
+  border: 1px solid rgba(153, 179, 206, 0.16);
+  background: rgba(7, 17, 27, 0.72);
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.mode-card.active .mode-badge {
+  border-color: rgba(31, 78, 104, 0.32);
+  color: var(--muted-strong);
+}
+
+/* ─── Visualizer Two-Column Layout ──────────────────────── */
+.visualizer-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(240px, 0.9fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+/* ─── Stage Card ─────────────────────────────────────────── */
+.stage-card {
+  display: grid;
+  gap: 1.25rem;
+  padding: 1.35rem;
+}
+
+.stage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.stage-header > div {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.stage-kicker {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.3rem 0.72rem;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 78, 104, 0.2);
+  background: rgba(7, 22, 36, 0.72);
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.stage-header h2 {
+  font-size: 1.3rem;
+  letter-spacing: -0.04em;
+  line-height: 1.2;
+}
+
+.stage-header p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  max-width: 48ch;
+}
+
+.stage-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.42rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.stage-status.running {
+  border: 1px solid rgba(52, 211, 153, 0.28);
+  background: rgba(52, 211, 153, 0.08);
+  color: #34d399;
+}
+
+.stage-status.paused {
+  border: 1px solid rgba(153, 179, 206, 0.2);
+  background: rgba(153, 179, 206, 0.06);
+  color: var(--muted);
+}
+
+/* ─── Canvas Shell ───────────────────────────────────────── */
+.canvas-shell {
+  border-radius: 18px;
+  border: 1px solid rgba(153, 179, 206, 0.12);
+  overflow: hidden;
+  background: #060e1a;
+  line-height: 0;
+}
+
+.visualizer-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ─── Stage Notes ────────────────────────────────────────── */
+.stage-notes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.note-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.42rem 0.82rem;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 78, 104, 0.2);
+  background: rgba(7, 22, 36, 0.68);
+  color: var(--muted-strong);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.note-chip svg {
+  color: var(--accent-warm);
+  flex-shrink: 0;
+}
+
+/* ─── Control Card ───────────────────────────────────────── */
+.control-card {
+  display: grid;
+  gap: 1.25rem;
+  padding: 1.35rem;
+}
+
+.control-block {
+  display: grid;
+  gap: 0.65rem;
+}
+
 .control-block label {
   text-align: start;
 }
@@ -5,4 +272,171 @@
 .slider-row {
   display: flex;
   align-items: center;
+  gap: 0.75rem;
+}
+
+.value-chip {
+  flex-shrink: 0;
+  padding: 0.32rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 184, 77, 0.22);
+  background: rgba(7, 22, 36, 0.72);
+  color: var(--accent-warm);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ─── Action Row ─────────────────────────────────────────── */
+.action-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+}
+
+.action-button {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ─── Insight Panel ──────────────────────────────────────── */
+.insight-panel {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1rem;
+  border-radius: 18px;
+  border: 1px solid rgba(153, 179, 206, 0.1);
+  background: rgba(7, 17, 27, 0.62);
+}
+
+.insight-panel h3 {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-strong);
+}
+
+.insight-list {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.insight-item {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+}
+
+.insight-dot {
+  flex-shrink: 0;
+  margin-top: 0.45rem;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--accent), var(--accent-warm));
+  box-shadow: 0 0 10px rgba(31, 78, 104, 0.4);
+}
+
+.insight-item p {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+/* ─── Stats Row ──────────────────────────────────────────── */
+.visualizer-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.stat-card {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: 22px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(14, 27, 41, 0.96), rgba(7, 17, 28, 0.98));
+  box-shadow: var(--card-shadow);
+}
+
+.stat-card.blue {
+  border-color: rgba(96, 165, 250, 0.2);
+}
+
+.stat-card.cyan {
+  border-color: rgba(34, 211, 238, 0.18);
+}
+
+.stat-card.green {
+  border-color: rgba(52, 211, 153, 0.2);
+}
+
+.stat-card.amber {
+  border-color: rgba(245, 158, 11, 0.2);
+}
+
+.stat-label {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.stat-card.blue .stat-value {
+  color: #60a5fa;
+}
+
+.stat-card.cyan .stat-value {
+  color: #22d3ee;
+}
+
+.stat-card.green .stat-value {
+  color: #34d399;
+}
+
+.stat-card.amber .stat-value {
+  color: #f59e0b;
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 1080px) {
+  .visualizer-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 860px) {
+  .visualizer-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .visualizer-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .mode-switcher {
+    grid-template-columns: 1fr;
+  }
+
+  .action-row {
+    grid-template-columns: 1fr;
+  }
+
+  .visualizer-stats {
+    grid-template-columns: 1fr 1fr;
+  }
 }
