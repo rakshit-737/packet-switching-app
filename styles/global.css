@@ -1,0 +1,68 @@
+.root {
+  --color-primary: #437A9A; /* Deep Teal */
+  --color-secondary: #9D1182; /* Jewel Pink */
+  --color-accent: #D1A86C; /* Gold Accent */
+  --color-background: #F7F7F9; /* Soft Off-White */
+  --color-text: #2B2823; /* Dark Charcoal */
+  --spacing-unit: 8px; /* Base unit for spacing */
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  color: var(--color-text);
+  background-color: var(--color-background);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+  font-weight: normal;
+  color: var(--color-primary);
+  margin-bottom: calc(var(--spacing-unit) * 4);
+}
+
+p {
+  margin-bottom: calc(var(--spacing-unit) * 2);
+}
+
+a {
+  color: var(--color-secondary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--color-accent);
+}
+
+.button {
+  background-color: var(--color-accent);
+  color: white;
+  padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 4);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: var(--color-secondary);
+}
+
+.animate-fade {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.spacer {
+  height: var(--spacing-unit);
+}
