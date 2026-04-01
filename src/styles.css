@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 *,
 *::before,
@@ -9,27 +9,43 @@
 }
 
 :root {
-  --bg: #000000;
-  --bg-soft: #060606;
-  --surface: #0b1a2b;
-  --surface-strong: #11253b;
-  --surface-raised: #17344f;
-  --surface-glow: rgba(112, 157, 180, 0.05);
-  --line: rgba(153, 179, 206, 0.15);
-  --line-strong: rgba(153, 179, 206, 0.28);
-  --text: #f3f8ff;
-  --muted: #9db3cd;
-  --muted-strong: #c5d5e9;
-  --accent: #365f78;
-  --accent-strong: #2a4c61;
-  --accent-warm: #ffb84d;
-  --accent-warm-strong: #fb923c;
-  --accent-violet: #a78bfa;
-  --accent-rose: #fb7185;
-  --success: #5be7a1;
-  --danger: #ff6d7a;
+  /* ── Jewel-tone palette ─────────────────────────────── */
+  --bg: #1C1916;
+  --bg-soft: #201D1A;
+  --surface: #252119;
+  --surface-strong: #2E2A24;
+  --surface-raised: #38332C;
+  --surface-glow: rgba(67, 122, 154, 0.06);
+  --line: rgba(240, 235, 227, 0.1);
+  --line-strong: rgba(240, 235, 227, 0.2);
+  --text: #F0EBE3;
+  --muted: #A89F94;
+  --muted-strong: #C8BFB5;
 
-  /* Spacing scale */
+  /* Sapphire – primary interactive */
+  --accent: #437A9A;
+  --accent-strong: #356281;
+
+  /* Gold – warm highlights */
+  --accent-warm: #D1A86C;
+  --accent-warm-strong: #BA8D51;
+
+  /* Amethyst – jewel accent */
+  --accent-violet: #9D1182;
+  --accent-rose: #C2185B;
+
+  /* Emerald – success / natural */
+  --success: #10B981;
+
+  /* Danger */
+  --danger: #E53E3E;
+
+  /* Cyan – tech / interactive */
+  --accent-cyan: #67E8F9;
+  --accent-emerald: #34D399;
+  --accent-amethyst: #C084FC;
+
+  /* ── Spacing scale (8px base) ───────────────────────── */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -41,8 +57,9 @@
   --space-9: 2.25rem;
   --space-10: 2.5rem;
   --space-12: 3rem;
-  --card-shadow: 0 16px 32px rgba(2, 8, 20, 0.28);
-  --panel-shadow: 0 32px 90px rgba(0, 0, 0, 0.34);
+
+  --card-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+  --panel-shadow: 0 32px 90px rgba(0, 0, 0, 0.5);
   --radius-lg: 24px;
   --radius-md: 20px;
   --radius-sm: 14px;
@@ -55,8 +72,8 @@ html {
 body {
   min-height: 100vh;
   color: var(--text);
-  background: #000;
-  font-family: 'Inter', 'Segoe UI', sans-serif;
+  background: var(--bg);
+  font-family: 'DM Sans', 'Segoe UI', sans-serif;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
 }
@@ -87,7 +104,7 @@ button {
 code,
 pre,
 .mono {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
 }
 
 h1,
@@ -97,7 +114,7 @@ h4,
 .brand-title,
 .section-heading h2,
 .page-hero h1 {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Playfair Display', Georgia, serif;
 }
 
 ::selection {
