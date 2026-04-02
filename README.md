@@ -4,23 +4,23 @@ A modern, educational web application for learning packet switching and circuit 
 
 ## Features
 
-✨ **Interactive Visualizations**
+ **Interactive Visualizations**
 - Unified visualizer: switch between packet and circuit modes in one view
 - Canvas-based real-time animation of dedicated lanes and independent packet flows
 - Live playback speed control, configurable packet/call parameters
 
-📚 **Educational Content**
+ **Educational Content**
 - Concept Atlas: comparison table, core concept cards, formula reference, quick-fact reminders
 - Numerical Solvers: delay, SNR, and throughput calculators with instant recompute
 - Side-by-side tradeoff summaries on the Home page
 
-🎨 **Modern UI/UX**
+ **Modern UI/UX**
 - Cinematic BootSequence entry overlay (`prefers-reduced-motion` aware)
 - Scroll-reactive navbar (hides on scroll-down, reveals on scroll-up)
 - Staggered Framer Motion page entries and scroll-triggered section reveals on all four pages
 - Dark theme, CSS custom-property design tokens, responsive layout
 
-⚡ **Performance**
+ **Performance**
 - Vite build with automatic code splitting
 - All motion uses `transform`/`opacity` only (GPU composited)
 - Canvas rendering isolated from React re-renders
