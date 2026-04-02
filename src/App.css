@@ -23,11 +23,11 @@
 .app::after {
   z-index: -1;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    linear-gradient(rgba(34, 211, 238, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.04) 1px, transparent 1px);
   background-size: 72px 72px;
   mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.95) 48%, transparent 100%);
-  opacity: 0.3;
+  opacity: 0.4;
 }
 
 .main-content {
@@ -53,10 +53,10 @@
   grid-template-columns: 1.3fr 0.8fr 1fr;
   gap: 1.2rem;
   padding: 1.5rem;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(34, 211, 238, 0.1);
   border-radius: 30px;
   background:
-    linear-gradient(180deg, rgba(15, 26, 39, 0.92), rgba(12, 16, 36, 0.96)),
+    linear-gradient(180deg, rgba(8, 16, 28, 0.95), rgba(4, 8, 18, 0.98)),
     var(--surface);
   box-shadow: var(--surface-shadow);
 }
@@ -71,8 +71,8 @@
   width: fit-content;
   padding: 0.4rem 0.9rem;
   border-radius: 999px;
-  border: 1px solid rgba(37, 67, 86, 0.24);
-  background: rgba(14, 24, 32, 0.84);
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  background: rgba(3, 14, 22, 0.88);
   color: var(--accent);
   font-size: 0.76rem;
   font-weight: 700;
@@ -124,8 +124,8 @@
   gap: 0.65rem;
   padding: 0.85rem 1rem;
   border-radius: 18px;
-  border: 1px solid rgba(37, 67, 86, 0.16);
-  background: rgba(8, 17, 29, 0.72);
+  border: 1px solid rgba(34, 211, 238, 0.12);
+  background: rgba(4, 10, 20, 0.78);
   color: var(--muted-strong);
   line-height: 1.5;
 }
