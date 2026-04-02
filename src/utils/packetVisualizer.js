@@ -72,29 +72,29 @@ function getEdgeUsage(packets) {
 
 function drawBackdrop(ctx, width, height, time) {
   const baseGradient = ctx.createLinearGradient(0, 0, width, height)
-  baseGradient.addColorStop(0, '#06101d')
-  baseGradient.addColorStop(0.55, '#091629')
-  baseGradient.addColorStop(1, '#050b16')
+  baseGradient.addColorStop(0, '#030712')
+  baseGradient.addColorStop(0.5, '#050d1a')
+  baseGradient.addColorStop(1, '#020510')
 
   ctx.fillStyle = baseGradient
   ctx.fillRect(0, 0, width, height)
 
-  const glow = ctx.createRadialGradient(
-    width * 0.52,
-    height * 0.38,
-    20,
-    width * 0.52,
-    height * 0.38,
-    width * 0.7,
-  )
-  glow.addColorStop(0, 'rgba(31, 78, 104, 0.18)')
-  glow.addColorStop(0.45, 'rgba(37, 99, 235, 0.1)')
-  glow.addColorStop(1, 'rgba(0, 0, 0, 0)')
+  const cyanGlow = ctx.createRadialGradient(width * 0.28, height * 0.1, 10, width * 0.28, height * 0.1, width * 0.6)
+  cyanGlow.addColorStop(0, 'rgba(34, 211, 238, 0.14)')
+  cyanGlow.addColorStop(0.5, 'rgba(6, 182, 212, 0.06)')
+  cyanGlow.addColorStop(1, 'rgba(0, 0, 0, 0)')
 
-  ctx.fillStyle = glow
+  ctx.fillStyle = cyanGlow
   ctx.fillRect(0, 0, width, height)
 
-  ctx.fillStyle = 'rgba(125, 211, 252, 0.06)'
+  const violetGlow = ctx.createRadialGradient(width * 0.82, height, 10, width * 0.82, height, width * 0.55)
+  violetGlow.addColorStop(0, 'rgba(167, 139, 250, 0.12)')
+  violetGlow.addColorStop(1, 'rgba(0, 0, 0, 0)')
+
+  ctx.fillStyle = violetGlow
+  ctx.fillRect(0, 0, width, height)
+
+  ctx.fillStyle = 'rgba(34, 211, 238, 0.05)'
   const haloX = width * (0.22 + ((Math.sin(time * 0.35) + 1) * 0.08))
   const haloY = height * (0.18 + ((Math.cos(time * 0.3) + 1) * 0.04))
   ctx.beginPath()
@@ -104,7 +104,7 @@ function drawBackdrop(ctx, width, height, time) {
 
 function drawGrid(ctx, width, height, time) {
   ctx.save()
-  ctx.strokeStyle = 'rgba(148, 163, 184, 0.07)'
+  ctx.strokeStyle = 'rgba(34, 211, 238, 0.06)'
   ctx.lineWidth = 1
 
   const step = Math.max(42, width / 16)
@@ -134,19 +134,20 @@ function drawConnections(ctx, nodes, edgeUsage, time) {
     const activeLoad = edgeUsage.get(edgeKey(startIndex, endIndex)) || 0
 
     ctx.save()
-    ctx.strokeStyle = 'rgba(71, 85, 105, 0.48)'
-    ctx.lineWidth = 3
+    ctx.strokeStyle = 'rgba(34, 211, 238, 0.1)'
+    ctx.lineWidth = 2
     ctx.beginPath()
     ctx.moveTo(start.x, start.y)
     ctx.lineTo(end.x, end.y)
     ctx.stroke()
 
-    ctx.strokeStyle = `rgba(55, 92, 138, ${0.18 + Math.min(activeLoad, 5) * 0.08})`
+    const intensity = 0.28 + Math.min(activeLoad, 5) * 0.12
+    ctx.strokeStyle = `rgba(34, 211, 238, ${intensity})`
     ctx.lineWidth = 1.8 + Math.min(activeLoad, 4) * 0.45
-    ctx.setLineDash([18, 18])
+    ctx.setLineDash([14, 14])
     ctx.lineDashOffset = -time * 22 - index * 7
-    ctx.shadowColor = 'rgba(31, 78, 104, 0.35)'
-    ctx.shadowBlur = activeLoad > 0 ? 14 : 0
+    ctx.shadowColor = 'rgba(34, 211, 238, 0.55)'
+    ctx.shadowBlur = activeLoad > 0 ? 18 : 5
     ctx.beginPath()
     ctx.moveTo(start.x, start.y)
     ctx.lineTo(end.x, end.y)
@@ -157,16 +158,19 @@ function drawConnections(ctx, nodes, edgeUsage, time) {
 
 function drawNodes(ctx, nodes) {
   nodes.forEach((node) => {
-    const outerColor = node.role === 'destination' ? '#f59e0b' : node.role === 'source' ? '#1f5e69' : '#2f4f73'
-    const innerColor = node.role === 'destination' ? '#fde68a' : node.role === 'source' ? '#9fbfca' : '#a9bfd2'
+    const outerColor = node.role === 'destination' ? '#f59e0b' : node.role === 'source' ? '#22d3ee' : '#a78bfa'
+    const innerColor = node.role === 'destination' ? '#fde68a' : node.role === 'source' ? '#cffafe' : '#ede9fe'
 
     ctx.save()
-    ctx.fillStyle = hexToRgba(outerColor, 0.14)
+    ctx.shadowColor = hexToRgba(outerColor, 0.7)
+    ctx.shadowBlur = 22
+    ctx.fillStyle = hexToRgba(outerColor, 0.16)
     ctx.beginPath()
-    ctx.arc(node.x, node.y, 26, 0, Math.PI * 2)
+    ctx.arc(node.x, node.y, 28, 0, Math.PI * 2)
     ctx.fill()
 
-    ctx.strokeStyle = hexToRgba(outerColor, 0.85)
+    ctx.shadowBlur = 0
+    ctx.strokeStyle = hexToRgba(outerColor, 0.9)
     ctx.lineWidth = 2.5
     ctx.beginPath()
     ctx.arc(node.x, node.y, 22, 0, Math.PI * 2)
@@ -195,7 +199,7 @@ function drawPackets(ctx, packets, routes, width) {
   packets.forEach((packet) => {
     const route = routes[packet.routeIndex % routes.length]
     const position = getPointAlongPath(route, packet.progress)
-    const trailPoint = getPointAlongPath(route, normalizeProgress(packet.progress - 0.04))
+    const trailPoint = getPointAlongPath(route, Math.max(0, packet.progress - 0.04))
 
     if (!position || !trailPoint) return
 
@@ -237,26 +241,26 @@ function drawHud(ctx, width, height, packets, time, options) {
       : '100.0'
 
   drawPill(ctx, 24, 22, 'Packet Switching', {
-    background: 'rgba(8, 15, 30, 0.88)',
-    border: 'rgba(31, 78, 104, 0.4)',
-    color: '#e0f2fe',
+    background: 'rgba(3, 7, 18, 0.92)',
+    border: 'rgba(34, 211, 238, 0.4)',
+    color: '#67e8f9',
   })
 
   drawPill(ctx, 190, 22, `${totalPackets} packets in flight`, {
-    background: 'rgba(7, 23, 46, 0.72)',
-    border: 'rgba(59, 130, 246, 0.35)',
-    color: '#bfdbfe',
+    background: 'rgba(5, 8, 24, 0.82)',
+    border: 'rgba(167, 139, 250, 0.4)',
+    color: '#c4b5fd',
   })
 
   drawPill(ctx, width - 24, 22, 'Shared links / adaptive routes', {
     align: 'right',
-    background: 'rgba(15, 23, 42, 0.72)',
-    border: 'rgba(148, 163, 184, 0.25)',
+    background: 'rgba(5, 10, 24, 0.82)',
+    border: 'rgba(148, 163, 184, 0.28)',
     color: '#e2e8f0',
   })
 
   ctx.save()
-  ctx.fillStyle = 'rgba(226, 232, 240, 0.88)'
+  ctx.fillStyle = 'rgba(186, 230, 253, 0.82)'
   ctx.font = '500 12px JetBrains Mono, monospace'
   ctx.textAlign = 'left'
   ctx.fillText(
@@ -318,9 +322,9 @@ function drawTag(ctx, x, y, text, accent, options = {}) {
 function getPointAlongPath(path, progress) {
   if (!path.length) return null
 
-  const normalizedProgress = normalizeProgress(progress)
+  const clampedProgress = Math.min(1, Math.max(0, Number.isFinite(progress) ? progress : 0))
   const pathLength = getPathLength(path)
-  const targetDistance = pathLength * normalizedProgress
+  const targetDistance = pathLength * clampedProgress
 
   let travelled = 0
 

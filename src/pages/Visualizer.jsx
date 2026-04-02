@@ -190,6 +190,7 @@ export default function Visualizer() {
                 packetSize={packetSize}
                 dataSize={dataSize}
                 resetToken={resetToken}
+                onComplete={() => setIsRunning(false)}
               />
             ) : (
               <CircuitCanvas

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { drawPacketSwitching } from '../utils/packetVisualizer'
 
-const PACKET_COLORS = ['#24546f', '#2f4f73', '#1f5e69', '#34d399', '#f59e0b', '#fb7185']
+const PACKET_COLORS = ['#22d3ee', '#a78bfa', '#34d399', '#fb7185', '#f59e0b', '#60a5fa']
 const CANVAS_ASPECT_RATIO = 16 / 10
 const MAX_CANVAS_WIDTH = 960
 
@@ -11,13 +11,21 @@ export default function PacketCanvas({
   packetSize,
   dataSize,
   resetToken = 0,
+  onComplete,
 }) {
   const canvasRef = useRef(null)
   const animationRef = useRef(null)
   const stateRef = useRef(createPacketSimulation(packetSize, dataSize))
+  const simulationDoneRef = useRef(false)
+  const onCompleteRef = useRef(onComplete)
+
+  useEffect(() => {
+    onCompleteRef.current = onComplete
+  }, [onComplete])
 
   useEffect(() => {
     stateRef.current = createPacketSimulation(packetSize, dataSize)
+    simulationDoneRef.current = false
   }, [packetSize, dataSize, resetToken])
 
   useEffect(() => {
@@ -36,12 +44,18 @@ export default function PacketCanvas({
       const dimensions = syncCanvasSize(canvas, context)
       const simulation = stateRef.current
 
-      if (isRunning) {
+      if (isRunning && !simulationDoneRef.current) {
         simulation.time += delta * speed
         simulation.packets = simulation.packets.map((packet) => ({
           ...packet,
-          progress: normalizeProgress(packet.progress + delta * speed * packet.velocity),
+          progress: Math.min(1, packet.progress + delta * speed * packet.velocity),
         }))
+
+        const allDone = simulation.packets.every((packet) => packet.progress >= 1)
+        if (allDone) {
+          simulationDoneRef.current = true
+          onCompleteRef.current?.()
+        }
       }
 
       drawPacketSwitching(
@@ -120,8 +134,4 @@ function clampNumber(value, fallback, min, max, step = 1) {
   const clamped = Math.min(max, Math.max(min, numericValue))
   const stepped = step > 1 ? Math.round(clamped / step) * step : clamped
   return Math.min(max, Math.max(min, stepped))
-}
-
-function normalizeProgress(progress) {
-  return ((progress % 1) + 1) % 1
 }
