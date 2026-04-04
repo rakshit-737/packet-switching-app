@@ -1,6 +1,10 @@
 import { useNavigate } from 'react-router-dom'
 import { ArrowRight, BookOpen, Calculator, ExternalLink, HelpCircle, Network, Play, Shield, Users, Youtube, Zap } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
+import VantaNetBackground from '../components/VantaNetBackground'
+import ZdogNetworkIcon from '../components/ZdogNetworkIcon'
+import ScrollMetricsCounter from '../components/ScrollMetricsCounter'
+import ParallaxSection from '../components/ParallaxSection'
 import '../styles/Home.css'
 
 // Motion variants — all animate transform/opacity only
@@ -229,8 +233,11 @@ export default function Home() {
 
   return (
     <div className="home-page">
-      <motion.section className="home-hero card" {...motionProps}>
-        <motion.div className="home-hero-copy" {...itemProps}>
+      <motion.section className="home-hero card" style={{ position: 'relative', overflow: 'hidden' }} {...motionProps}>
+        {/* Animated WebGL network mesh — progressive enhancement */}
+        <VantaNetBackground />
+
+        <motion.div className="home-hero-copy" style={{ position: 'relative', zIndex: 1 }} {...itemProps}>
           <span className="section-eyebrow">Computer Networks · Switching lab</span>
           <h1>Step inside the network and watch switching choices unfold.</h1>
           <p>
@@ -248,19 +255,16 @@ export default function Home() {
             </button>
           </div>
 
-          <motion.div className="home-stat-row" {...(prefersReducedMotion ? {} : { variants: staggerContainer })}>
-            {heroStats.map((stat) => (
-              <motion.div key={stat.label} className="data-pill" {...itemProps}>
-                <strong>{stat.value}</strong>
-                <span>{stat.label}</span>
-              </motion.div>
-            ))}
-          </motion.div>
+          <ScrollMetricsCounter
+            stats={heroStats.map((s) => ({ ...s }))}
+            className="home-stat-row"
+          />
         </motion.div>
 
         <motion.div
           className="home-hero-visual"
           aria-hidden="true"
+          style={{ position: 'relative', zIndex: 1 }}
           {...(prefersReducedMotion ? {} : { variants: scaleIn })}
         >
           <div className="radar-board">
@@ -275,6 +279,11 @@ export default function Home() {
             <div className="radar-node radar-node-b">R1</div>
             <div className="radar-node radar-node-c">R2</div>
             <div className="radar-node radar-node-d">D</div>
+
+            {/* 3D network icon in the centre of the radar */}
+            <div className="radar-zdog-center" aria-hidden="true">
+              <ZdogNetworkIcon size={88} spin={0.01} />
+            </div>
 
             <div className="signal-card signal-card-packet">
               <span>Packet path</span>
@@ -376,29 +385,35 @@ export default function Home() {
       </motion.section>
 
       {/* Getting Started */}
-      <motion.section
+      <ParallaxSection
         className="home-section"
-        {...(prefersReducedMotion ? {} : { ...viewportProps, variants: staggerContainer })}
+        speed={0.25}
+        as="div"
       >
-        <motion.div className="section-heading" {...(prefersReducedMotion ? {} : { variants: fadeUp })}>
-          <span className="section-eyebrow">Getting started</span>
-          <h2>Six steps from zero to fluent in switching theory.</h2>
-          <p>Follow this path to move from watching to understanding to solving — without losing momentum.</p>
-        </motion.div>
-
         <motion.div
-          className="home-steps-grid"
-          {...(prefersReducedMotion ? {} : { variants: staggerContainer })}
+          className="home-section"
+          {...(prefersReducedMotion ? {} : { ...viewportProps, variants: staggerContainer })}
         >
-          {gettingStartedSteps.map(({ step, title, desc }) => (
-            <motion.article key={step} className="step-card card" {...(prefersReducedMotion ? {} : { variants: fadeUp })}>
-              <span className="step-number">{step}</span>
-              <h3>{title}</h3>
-              <p>{desc}</p>
-            </motion.article>
-          ))}
+          <motion.div className="section-heading" {...(prefersReducedMotion ? {} : { variants: fadeUp })}>
+            <span className="section-eyebrow">Getting started</span>
+            <h2>Six steps from zero to fluent in switching theory.</h2>
+            <p>Follow this path to move from watching to understanding to solving — without losing momentum.</p>
+          </motion.div>
+
+          <motion.div
+            className="home-steps-grid"
+            {...(prefersReducedMotion ? {} : { variants: staggerContainer })}
+          >
+            {gettingStartedSteps.map(({ step, title, desc }) => (
+              <motion.article key={step} className="step-card card" {...(prefersReducedMotion ? {} : { variants: fadeUp })}>
+                <span className="step-number">{step}</span>
+                <h3>{title}</h3>
+                <p>{desc}</p>
+              </motion.article>
+            ))}
+          </motion.div>
         </motion.div>
-      </motion.section>
+      </ParallaxSection>
 
       {/* Video Tutorial */}
       <motion.section

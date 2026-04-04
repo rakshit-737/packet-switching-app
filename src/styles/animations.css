@@ -1,0 +1,87 @@
+/**
+ * Global animation tokens, keyframes, and utility classes.
+ * Import this file once in main.jsx (or App.jsx) so all pages share the tokens.
+ */
+
+/* ── Keyframes ───────────────────────────────────────────────── */
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0); }
+  50%       { box-shadow: 0 0 20px 4px rgba(34, 211, 238, 0.22); }
+}
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes glitch-h {
+  0%   { clip-path: inset(10% 0 80% 0); transform: translateX(-4px); }
+  20%  { clip-path: inset(55% 0 30% 0); transform: translateX(4px); }
+  40%  { clip-path: inset(20% 0 60% 0); transform: translateX(-2px); }
+  60%  { clip-path: inset(75% 0 5%  0); transform: translateX(2px); }
+  80%  { clip-path: inset(40% 0 40% 0); transform: translateX(-3px); }
+  100% { clip-path: inset(0% 0 100% 0); transform: translateX(0); }
+}
+
+@keyframes scan-line {
+  0%   { top: -4px; }
+  100% { top: 100%; }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+/* ── Utility classes ─────────────────────────────────────────── */
+
+.anim-pulse-glow  { animation: pulse-glow 2.8s ease-in-out infinite; }
+.anim-float       { animation: float-y    3.6s ease-in-out infinite; }
+.anim-spin-slow   { animation: spin-slow  8s   linear      infinite; }
+.anim-fade-up     { animation: fade-in-up 0.6s var(--ease-smooth, cubic-bezier(0.25,0.46,0.45,0.94)) both; }
+
+/** Stagger delay helpers (use in conjunction with .anim-fade-up) */
+.anim-delay-1 { animation-delay: 0.1s; }
+.anim-delay-2 { animation-delay: 0.2s; }
+.anim-delay-3 { animation-delay: 0.3s; }
+.anim-delay-4 { animation-delay: 0.4s; }
+.anim-delay-5 { animation-delay: 0.5s; }
+
+/** GPU hint for elements being animated */
+.gpu { will-change: transform, opacity; }
+
+/** Shimmer loading placeholder */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(34, 211, 238, 0.05) 0%,
+    rgba(34, 211, 238, 0.12) 50%,
+    rgba(34, 211, 238, 0.05) 100%
+  );
+  background-size: 200% auto;
+  animation: shimmer 1.8s linear infinite;
+}
+
+/* ── Reduced-motion overrides ────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration:   0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration:  0.01ms !important;
+    scroll-behavior:      auto   !important;
+  }
+}
