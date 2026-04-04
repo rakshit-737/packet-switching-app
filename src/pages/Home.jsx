@@ -381,7 +381,7 @@ export default function Home() {
       </motion.section>
 
       {/* Getting Started */}
-      <section className="home-section">
+      <section>
         <motion.div
           className="home-section"
           {...(prefersReducedMotion ? {} : { ...viewportProps, variants: staggerContainer })}
