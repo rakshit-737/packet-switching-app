@@ -7,28 +7,6 @@
   overflow: hidden;
 }
 
-.app::before,
-.app::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-}
-
-.app::before {
-  z-index: -2;
-  background: transparent;
-}
-
-.app::after {
-  z-index: -1;
-  background-image:
-    linear-gradient(rgba(34, 211, 238, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(34, 211, 238, 0.04) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.95) 48%, transparent 100%);
-  opacity: 0.4;
-}
 
 .main-content {
   position: relative;
