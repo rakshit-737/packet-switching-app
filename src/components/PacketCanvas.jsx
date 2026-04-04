@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { drawPacketSwitching } from '../utils/packetVisualizer'
+import { drawPacketSwitching, getHoverTarget } from '../utils/packetVisualizer'
 
 const PACKET_COLORS = ['#22d3ee', '#a78bfa', '#34d399', '#fb7185', '#f59e0b', '#60a5fa']
 const CANVAS_ASPECT_RATIO = 16 / 10
@@ -12,16 +12,22 @@ export default function PacketCanvas({
   dataSize,
   resetToken = 0,
   onComplete,
+  onHover,
 }) {
   const canvasRef = useRef(null)
   const animationRef = useRef(null)
   const stateRef = useRef(createPacketSimulation(packetSize, dataSize))
   const simulationDoneRef = useRef(false)
   const onCompleteRef = useRef(onComplete)
+  const onHoverRef = useRef(onHover)
 
   useEffect(() => {
     onCompleteRef.current = onComplete
   }, [onComplete])
+
+  useEffect(() => {
+    onHoverRef.current = onHover
+  }, [onHover])
 
   useEffect(() => {
     stateRef.current = createPacketSimulation(packetSize, dataSize)
@@ -81,6 +87,45 @@ export default function PacketCanvas({
       }
     }
   }, [isRunning, speed, packetSize, dataSize, resetToken])
+
+  // mouse-hover detection for 3D cursor effect
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return undefined
+
+    const handleMouseMove = (event) => {
+      const rect = canvas.getBoundingClientRect()
+      const scaleX = canvas.width / (window.devicePixelRatio || 1) / rect.width
+      const scaleY = canvas.height / (window.devicePixelRatio || 1) / rect.height
+      const localX = (event.clientX - rect.left) * scaleX
+      const localY = (event.clientY - rect.top) * scaleY
+
+      const dimensions = { width: rect.width * scaleX, height: rect.height * scaleY }
+      const hit = getHoverTarget(localX, localY, stateRef.current, dimensions)
+
+      if (hit) {
+        onHoverRef.current?.({
+          x: event.clientX,
+          y: event.clientY,
+          type: hit.type,
+        })
+      } else {
+        onHoverRef.current?.(null)
+      }
+    }
+
+    const handleMouseLeave = () => {
+      onHoverRef.current?.(null)
+    }
+
+    canvas.addEventListener('mousemove', handleMouseMove)
+    canvas.addEventListener('mouseleave', handleMouseLeave)
+
+    return () => {
+      canvas.removeEventListener('mousemove', handleMouseMove)
+      canvas.removeEventListener('mouseleave', handleMouseLeave)
+    }
+  }, [])
 
   return <canvas ref={canvasRef} className="visualizer-canvas" aria-label="Packet switching visualizer" />
 }
