@@ -828,7 +828,7 @@
   }
 }
 
-/* ── Scroll metrics counter (replaces static data-pills) ───── */
+/* ── Scroll metrics counter (replaces static data-pill stat row) ─ */
 
 .scroll-metrics-row {
   display: flex;

@@ -16,6 +16,7 @@ import { netPreset, isLowEndDevice, prefersReducedMotion as checkReducedMotion }
 export default function VantaNetBackground({ overrides = {}, style = {} }) {
   const ref = useRef(null)
   const effectRef = useRef(null)
+  const overridesRef = useRef(overrides)
   const prefersReduced = useReducedMotion()
 
   useEffect(() => {
@@ -24,6 +25,12 @@ export default function VantaNetBackground({ overrides = {}, style = {} }) {
     if (!ref.current) return
 
     let cancelled = false
+
+    // overrides is typically a static config object passed at mount-time.
+    // We capture it in the closure via overridesRef so it doesn't need to be
+    // listed in the dependency array (re-running the effect on every render
+    // when the caller passes an inline object literal would cause flicker).
+    const overridesSnapshot = overridesRef.current
 
     // Dynamically import both Three.js and Vanta so heavy 3D code is never in
     // the critical-path bundle — it loads only when this component mounts.
@@ -37,7 +44,7 @@ export default function VantaNetBackground({ overrides = {}, style = {} }) {
       effectRef.current = VANTA({
         el: ref.current,
         THREE,
-        ...netPreset(overrides),
+        ...netPreset(overridesSnapshot),
       })
     }).catch(() => {
       // Silently fail — background is a progressive enhancement
@@ -48,7 +55,7 @@ export default function VantaNetBackground({ overrides = {}, style = {} }) {
       effectRef.current?.destroy()
       effectRef.current = null
     }
-  }, [prefersReduced]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [prefersReduced]) // overrides intentionally omitted — see comment above
 
   return (
     <div

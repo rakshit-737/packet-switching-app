@@ -125,7 +125,11 @@ export default function ZdogNetworkIcon({
       cancelled = true
       if (rafRef.current) cancelAnimationFrame(rafRef.current)
     }
-  }, [prefersReduced, color, spin, size]) // eslint-disable-line react-hooks/exhaustive-deps
+    // color, spin, and size are captured at mount-time; the Zdog illustration
+    // is a canvas-drawn scene that cannot be updated in-place. Re-mounting
+    // (i.e. passing a new key from the parent) is the correct way to change
+    // these props after initial render.
+  }, [prefersReduced]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <canvas
