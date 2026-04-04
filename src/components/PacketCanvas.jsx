@@ -95,12 +95,9 @@ export default function PacketCanvas({
 
     const handleMouseMove = (event) => {
       const rect = canvas.getBoundingClientRect()
-      const scaleX = canvas.width / (window.devicePixelRatio || 1) / rect.width
-      const scaleY = canvas.height / (window.devicePixelRatio || 1) / rect.height
-      const localX = (event.clientX - rect.left) * scaleX
-      const localY = (event.clientY - rect.top) * scaleY
-
-      const dimensions = { width: rect.width * scaleX, height: rect.height * scaleY }
+      const localX = event.clientX - rect.left
+      const localY = event.clientY - rect.top
+      const dimensions = { width: rect.width, height: rect.height }
       const hit = getHoverTarget(localX, localY, stateRef.current, dimensions)
 
       if (hit) {

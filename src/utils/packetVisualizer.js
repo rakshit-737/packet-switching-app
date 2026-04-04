@@ -51,9 +51,8 @@ export function getHoverTarget(mouseX, mouseY, simulation, dimensions) {
   }
 
   if (simulation && simulation.packets && simulation.packets.length > 0) {
-    const routes = ROUTE_INDEXES.map((route) => route.map((index) => nodes[index]))
     for (const packet of simulation.packets) {
-      const route = routes[packet.routeIndex % routes.length]
+      const route = ROUTE_INDEXES[packet.routeIndex % ROUTE_INDEXES.length].map((index) => nodes[index])
       const position = getPointAlongPath(route, packet.progress)
       if (position && distanceBetween({ x: mouseX, y: mouseY }, position) <= 18) {
         return { type: 'packet' }
