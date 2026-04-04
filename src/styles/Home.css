@@ -862,6 +862,14 @@
   letter-spacing: 0.04em;
 }
 
+/* ── Radar topology (rotates the whole network diagram) ────── */
+
+.radar-topology {
+  position: absolute;
+  inset: 0;
+  animation: spin-slow 30s linear infinite;
+}
+
 /* ── Radar hub (replaces Zdog 3D icon) ─────────────────────── */
 
 .radar-hub {
@@ -885,7 +893,6 @@
   border: 1px solid transparent;
   border-top-color: rgba(34, 211, 238, 0.55);
   border-right-color: rgba(34, 211, 238, 0.18);
-  animation: spin-slow 9s linear infinite;
 }
 
 .radar-hub-inner-ring {

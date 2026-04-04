@@ -262,23 +262,25 @@ export default function Home() {
           {...(prefersReducedMotion ? {} : { variants: scaleIn })}
         >
           <div className="radar-board">
-            <div className="radar-ring radar-ring-one" />
-            <div className="radar-ring radar-ring-two" />
-            <div className="radar-link radar-link-one" />
-            <div className="radar-link radar-link-two" />
-            <div className="radar-link radar-link-three" />
-            <div className="radar-link radar-link-four" />
+            <div className="radar-topology" aria-hidden="true">
+              <div className="radar-ring radar-ring-one" />
+              <div className="radar-ring radar-ring-two" />
+              <div className="radar-link radar-link-one" />
+              <div className="radar-link radar-link-two" />
+              <div className="radar-link radar-link-three" />
+              <div className="radar-link radar-link-four" />
 
-            <div className="radar-node radar-node-a">S</div>
-            <div className="radar-node radar-node-b">R1</div>
-            <div className="radar-node radar-node-c">R2</div>
-            <div className="radar-node radar-node-d">D</div>
+              <div className="radar-node radar-node-a">S</div>
+              <div className="radar-node radar-node-b">R1</div>
+              <div className="radar-node radar-node-c">R2</div>
+              <div className="radar-node radar-node-d">D</div>
 
-            {/* Minimal animated hub in the centre of the radar */}
-            <div className="radar-hub" aria-hidden="true">
-              <div className="radar-hub-outer-ring" />
-              <div className="radar-hub-inner-ring" />
-              <div className="radar-hub-core" />
+              {/* Minimal animated hub in the centre of the radar */}
+              <div className="radar-hub">
+                <div className="radar-hub-outer-ring" />
+                <div className="radar-hub-inner-ring" />
+                <div className="radar-hub-core" />
+              </div>
             </div>
 
             <div className="signal-card signal-card-packet">
