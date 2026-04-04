@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { ArrowRight, BookOpen, Calculator, ExternalLink, HelpCircle, Network, Play, Shield, Users, Youtube, Zap } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
-import VantaNetBackground from '../components/VantaNetBackground'
 import ZdogNetworkIcon from '../components/ZdogNetworkIcon'
 import ScrollMetricsCounter from '../components/ScrollMetricsCounter'
 import ParallaxSection from '../components/ParallaxSection'
@@ -234,9 +233,6 @@ export default function Home() {
   return (
     <div className="home-page">
       <motion.section className="home-hero card" style={{ position: 'relative', overflow: 'hidden' }} {...motionProps}>
-        {/* Animated WebGL network mesh — progressive enhancement */}
-        <VantaNetBackground />
-
         <motion.div className="home-hero-copy" style={{ position: 'relative', zIndex: 1 }} {...itemProps}>
           <span className="section-eyebrow">Computer Networks · Switching lab</span>
           <h1>Step inside the network and watch switching choices unfold.</h1>
