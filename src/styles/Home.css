@@ -862,24 +862,48 @@
   letter-spacing: 0.04em;
 }
 
-/* ── Zdog icon in radar centre ─────────────────────────────── */
+/* ── Radar hub (replaces Zdog 3D icon) ─────────────────────── */
 
-.radar-zdog-center {
+.radar-hub {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 72px;
+  height: 72px;
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: none;
 }
 
-/* ── Parallax section ──────────────────────────────────────── */
-
-.parallax-section {
-  display: grid;
-  gap: 1.2rem;
+.radar-hub-outer-ring {
+  position: absolute;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  border-top-color: rgba(34, 211, 238, 0.55);
+  border-right-color: rgba(34, 211, 238, 0.18);
+  animation: spin-slow 9s linear infinite;
 }
+
+.radar-hub-inner-ring {
+  position: absolute;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(34, 211, 238, 0.1);
+}
+
+.radar-hub-core {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.8), 0 0 24px rgba(34, 211, 238, 0.35);
+  animation: pulse-glow 2.6s ease-in-out infinite;
+}
+
 
 

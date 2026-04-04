@@ -1,9 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { ArrowRight, BookOpen, Calculator, ExternalLink, HelpCircle, Network, Play, Shield, Users, Youtube, Zap } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
-import ZdogNetworkIcon from '../components/ZdogNetworkIcon'
 import ScrollMetricsCounter from '../components/ScrollMetricsCounter'
-import ParallaxSection from '../components/ParallaxSection'
 import '../styles/Home.css'
 
 // Motion variants — all animate transform/opacity only
@@ -276,9 +274,11 @@ export default function Home() {
             <div className="radar-node radar-node-c">R2</div>
             <div className="radar-node radar-node-d">D</div>
 
-            {/* 3D network icon in the centre of the radar */}
-            <div className="radar-zdog-center" aria-hidden="true">
-              <ZdogNetworkIcon size={88} spin={0.01} />
+            {/* Minimal animated hub in the centre of the radar */}
+            <div className="radar-hub" aria-hidden="true">
+              <div className="radar-hub-outer-ring" />
+              <div className="radar-hub-inner-ring" />
+              <div className="radar-hub-core" />
             </div>
 
             <div className="signal-card signal-card-packet">
@@ -381,11 +381,7 @@ export default function Home() {
       </motion.section>
 
       {/* Getting Started */}
-      <ParallaxSection
-        className="home-section"
-        speed={0.25}
-        as="div"
-      >
+      <section className="home-section">
         <motion.div
           className="home-section"
           {...(prefersReducedMotion ? {} : { ...viewportProps, variants: staggerContainer })}
@@ -409,7 +405,7 @@ export default function Home() {
             ))}
           </motion.div>
         </motion.div>
-      </ParallaxSection>
+      </section>
 
       {/* Video Tutorial */}
       <motion.section
