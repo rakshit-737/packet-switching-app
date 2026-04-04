@@ -1,6 +1,7 @@
 import { networkConcepts, formulas } from '../utils/formulas'
 import { BookOpen, Code2, Radio, Zap } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
+import EnhancedConceptCard from '../components/EnhancedConceptCard'
 import '../styles/pages/Concepts.css'
 
 const fadeUp = {
@@ -162,7 +163,7 @@ export default function Concepts() {
 
         <motion.div className="concepts-grid" {...(prefersReducedMotion ? {} : { variants: stagger })}>
           {networkConcepts.map((concept) => (
-            <motion.article key={concept.id} className="concept-card card" {...(prefersReducedMotion ? {} : { variants: fadeUp })}>
+            <EnhancedConceptCard key={concept.id} concept={concept}>
               <div className="concept-card-header">
                 <span className="concept-index">{String(concept.id).padStart(2, '0')}</span>
                 <h3>{concept.title}</h3>
@@ -191,7 +192,7 @@ export default function Concepts() {
                   </div>
                 </div>
               )}
-            </motion.article>
+            </EnhancedConceptCard>
           ))}
         </motion.div>
       </motion.section>

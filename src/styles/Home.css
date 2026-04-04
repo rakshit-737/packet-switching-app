@@ -828,16 +828,58 @@
   }
 }
 
-@media (max-width: 600px) {
-  .home-steps-grid {
-    grid-template-columns: 1fr;
-  }
+/* ── Scroll metrics counter (replaces static data-pills) ───── */
 
-  .home-team-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .home-ref-item {
-    grid-template-columns: 1fr;
-  }
+.scroll-metrics-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
 }
+
+.scroll-metric-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+  padding: 0.55rem 1rem;
+  border-radius: var(--radius-sm, 14px);
+  border: 1px solid var(--line);
+  background: rgba(8, 18, 29, 0.7);
+  min-width: 80px;
+}
+
+.scroll-metric-value {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--accent);
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.scroll-metric-label {
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+/* ── Zdog icon in radar centre ─────────────────────────────── */
+
+.radar-zdog-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* ── Parallax section ──────────────────────────────────────── */
+
+.parallax-section {
+  display: grid;
+  gap: 1.2rem;
+}
+
+

@@ -462,9 +462,65 @@ small {
   box-shadow: 0 0 16px rgba(34, 211, 238, 0.6);
 }
 
+.boot-log {
+  display: grid;
+  gap: 0.35rem;
+  min-height: 6rem;
+  overflow: hidden;
+}
+
 .boot-line {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
   color: var(--muted);
   font-size: 0.82rem;
   letter-spacing: 0.02em;
-  min-height: 1.2em;
+}
+
+.boot-prompt {
+  color: var(--accent);
+  font-size: 0.78rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.boot-status {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: 0;
+}
+
+/* Scan-line effect */
+.boot-scan-line {
+  position: absolute;
+  inset-inline: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(34, 211, 238, 0.18),
+    transparent
+  );
+  animation: scan-line-move 3s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes scan-line-move {
+  from { top: -4px; }
+  to   { top: 100%; }
+}
+
+/* Glitch effect on the brand title */
+.boot-brand--glitch .boot-title {
+  animation: boot-glitch 0.2s steps(1) forwards;
+}
+
+@keyframes boot-glitch {
+  0%   { text-shadow: -2px 0 rgba(251, 113, 133, 0.7), 2px 0 rgba(34, 211, 238, 0.7); transform: skewX(-2deg); }
+  33%  { text-shadow:  2px 0 rgba(167, 139, 250, 0.7), -2px 0 rgba(34, 211, 238, 0.7); transform: skewX(1deg); }
+  66%  { text-shadow: -1px 0 rgba(34, 211, 238, 0.8), 1px 0 rgba(251, 113, 133, 0.5); transform: skewX(0); }
+  100% { text-shadow: none; transform: none; }
 }
