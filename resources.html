@@ -322,6 +322,75 @@
             margin: 8px 0;
         }
 
+        /* Team Cards (Photo Gallery) */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .team-card {
+            background: var(--bg-secondary);
+            border: 2px solid var(--bg-tertiary);
+            border-radius: 14px;
+            padding: 28px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-6px);
+            box-shadow: 0 14px 36px rgba(59, 130, 246, 0.25);
+        }
+
+        .team-card .photo-placeholder {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            border: 3px solid var(--accent);
+            margin: 0 auto 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .team-card .photo-placeholder svg {
+            width: 64px;
+            height: 64px;
+            fill: var(--text-secondary);
+            opacity: 0.55;
+        }
+
+        .team-card .member-name {
+            font-size: 1.15em;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .team-card .member-role {
+            font-size: 0.88em;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .team-card .member-details {
+            font-size: 0.9em;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .team-card .member-details span {
+            display: block;
+        }
+
         /* Footer */
         .footer {
             text-align: center;
@@ -351,6 +420,10 @@
             }
 
             .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .team-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -402,12 +475,11 @@
 
         <!-- Navigation Buttons -->
         <div class="nav-buttons">
-            <button class="btn btn-primary" onclick="scrollTo('video')">▶ Learn Video</button>
-            <button class="btn btn-secondary" onclick="scrollTo('help')">❓ Help & FAQs</button>
-            <button class="btn btn-success" onclick="downloadResources()">⬇ Download Resources</button>
+            <button class="btn btn-primary" onclick="scrollTo('video')">▶ Learn</button>
+            <button class="btn btn-secondary" onclick="scrollTo('help')">❓ Help</button>
+            <button class="btn btn-success" onclick="downloadResources()">⬇ Download</button>
             <button class="btn btn-warning" onclick="scrollTo('developer')">👨‍💻 Developed by</button>
-            <button class="btn btn-primary" onclick="startSimulation()">🎮 Run Simulation</button>
-            <button class="btn btn-secondary" onclick="scrollTo('lab')">🔬 Virtual Lab</button>
+            <a class="btn btn-secondary" href="https://sites.google.com/view/swe2002/virtual-lab?authuser=0" target="_blank" rel="noopener noreferrer">🔬 Virtual Lab Reference</a>
         </div>
 
         <!-- Video Section -->
@@ -534,8 +606,16 @@
                 <li class="ref-item">
                     <strong>Wireshark Documentation</strong>
                     <p>Practical packet analysis and network debugging</p>
-                    <p>Direct Link: <a href="https://www.wireshark.org/docs/" target="_blank">Wireshark Docs →</a></p>
+                    <p>Direct Link: <a href="https://www.wireshark.org/docs/" target="_blank" rel="noopener noreferrer">Wireshark Docs →</a></p>
                     <span class="badge">Practical Tool</span>
+                </li>
+
+                <li class="ref-item">
+                    <strong>Virtual Lab – SWE2002 Packet Switching</strong>
+                    <p>Interactive virtual lab for hands-on packet switching experiments developed alongside this project</p>
+                    <p>Direct Link: <a href="https://sites.google.com/view/swe2002/virtual-lab?authuser=0" target="_blank" rel="noopener noreferrer">Open Virtual Lab →</a></p>
+                    <span class="badge">Virtual Lab</span>
+                    <span class="badge">Interactive</span>
                 </li>
             </ul>
         </div>
@@ -613,16 +693,59 @@
         <!-- Developer Information -->
         <div class="developer-info" id="developer">
             <h3>👨‍💻 Developed by</h3>
-            <div class="developer-names">
-                <strong>Rakshit Rameshbabu</strong>
-                <span>Registration No: 24BYB1117</span>
-                
-                <strong style="margin-top: 15px;">Harish Naganathan</strong>
-                <span>Registration No: 24BYB1086</span>
-            </div>
-            <p style="margin-top: 20px; font-size: 0.95em;">
-                🏫 Computer Networks Lab Project | VIT University
+            <p style="color: var(--text-secondary); font-size: 0.95em; margin-bottom: 25px;">
+                🏫 Computer Networks Lab Project | VIT University, Chennai Campus
             </p>
+
+            <div class="team-grid">
+                <!-- Faculty Advisor -->
+                <div class="team-card">
+                    <div class="photo-placeholder" role="img" aria-label="Photo placeholder for Dr. Swaminathan Annadurai">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+                        </svg>
+                    </div>
+                    <div class="member-name">Dr. Swaminathan Annadurai</div>
+                    <div class="member-role">Faculty Advisor</div>
+                    <div class="member-details">
+                        <span>Assistant Professor</span>
+                        <span>Vellore Institute of Technology (VIT)</span>
+                        <span>Chennai Campus</span>
+                    </div>
+                </div>
+
+                <!-- Student Developer 1 -->
+                <div class="team-card">
+                    <div class="photo-placeholder" role="img" aria-label="Photo placeholder for Rakshit Rameshbabu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+                        </svg>
+                    </div>
+                    <div class="member-name">Rakshit Rameshbabu</div>
+                    <div class="member-role">Student Developer</div>
+                    <div class="member-details">
+                        <span>Reg. No: 24BYB1117</span>
+                        <span>B.Tech CSE in Cybersecurity</span>
+                        <span>Student at VIT Chennai</span>
+                    </div>
+                </div>
+
+                <!-- Student Developer 2 -->
+                <div class="team-card">
+                    <div class="photo-placeholder" role="img" aria-label="Photo placeholder for Harish Naganathan K">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+                        </svg>
+                    </div>
+                    <div class="member-name">Harish Naganathan K</div>
+                    <div class="member-role">Student Developer</div>
+                    <div class="member-details">
+                        <span>Reg. No: 24BYB1086</span>
+                        <span>B.Tech CSE in Cybersecurity</span>
+                        <span>Student at VIT Chennai</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Additional Resources -->
