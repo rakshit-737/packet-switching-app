@@ -36,6 +36,33 @@ export function drawPacketSwitching(ctx, width, height, packets, time, options =
   drawHud(ctx, width, height, packets, time, options)
 }
 
+/**
+ * Given a canvas-local mouse position and current simulation state, returns the
+ * first interactive element hit by the cursor, or null if nothing is hovered.
+ * @returns {{ type: 'node' | 'packet' } | null}
+ */
+export function getHoverTarget(mouseX, mouseY, simulation, dimensions) {
+  const nodes = createMeshNodes(dimensions.width, dimensions.height)
+
+  for (const node of nodes) {
+    if (distanceBetween({ x: mouseX, y: mouseY }, node) <= 28) {
+      return { type: 'node' }
+    }
+  }
+
+  if (simulation && simulation.packets && simulation.packets.length > 0) {
+    for (const packet of simulation.packets) {
+      const route = ROUTE_INDEXES[packet.routeIndex % ROUTE_INDEXES.length].map((index) => nodes[index])
+      const position = getPointAlongPath(route, packet.progress)
+      if (position && distanceBetween({ x: mouseX, y: mouseY }, position) <= 18) {
+        return { type: 'packet' }
+      }
+    }
+  }
+
+  return null
+}
+
 function createMeshNodes(width, height) {
   const left = width * 0.12
   const right = width * 0.88

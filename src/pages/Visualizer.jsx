@@ -3,6 +3,7 @@ import { Activity, Network, Pause, Play, Radio, RotateCcw, Zap } from 'lucide-re
 import { motion, useReducedMotion } from 'framer-motion'
 import PacketCanvas from '../components/PacketCanvas'
 import CircuitCanvas from '../components/CircuitCanvas'
+import Cursor3D from '../components/Cursor3D'
 import '../styles/pages/Visualizer.css'
 
 const fadeUp = {
@@ -57,6 +58,7 @@ export default function Visualizer() {
   const [dataSize, setDataSize] = useState(1024)
   const [numCalls, setNumCalls] = useState(3)
   const [resetToken, setResetToken] = useState(0)
+  const [hoverTarget, setHoverTarget] = useState(null)
 
   const packetCount = Math.max(1, Math.ceil(dataSize / packetSize))
   const packetEfficiency = ((dataSize / (packetCount * packetSize)) * 100).toFixed(1)
@@ -119,6 +121,7 @@ export default function Visualizer() {
 
   return (
     <div className="visualizer-page">
+      <Cursor3D hoverTarget={hoverTarget} />
       <motion.section
         className="visualizer-hero"
         {...(prefersReducedMotion ? {} : { initial: 'hidden', animate: 'visible', variants: stagger })}
@@ -191,6 +194,7 @@ export default function Visualizer() {
                 dataSize={dataSize}
                 resetToken={resetToken}
                 onComplete={() => setIsRunning(false)}
+                onHover={setHoverTarget}
               />
             ) : (
               <CircuitCanvas
@@ -279,12 +283,26 @@ export default function Visualizer() {
           )}
 
           <div className="action-row">
-            <button type="button" className="btn btn-primary action-button" onClick={togglePlayback}>
+            <button
+              type="button"
+              className="btn btn-primary action-button"
+              onClick={togglePlayback}
+              onMouseEnter={(e) => setHoverTarget({ x: e.clientX, y: e.clientY, type: 'button' })}
+              onMouseMove={(e) => setHoverTarget({ x: e.clientX, y: e.clientY, type: 'button' })}
+              onMouseLeave={() => setHoverTarget(null)}
+            >
               {isRunning ? <Pause size={18} /> : <Play size={18} />}
               {isRunning ? 'Pause' : 'Start'}
             </button>
 
-            <button type="button" className="btn btn-secondary action-button" onClick={resetSimulation}>
+            <button
+              type="button"
+              className="btn btn-secondary action-button"
+              onClick={resetSimulation}
+              onMouseEnter={(e) => setHoverTarget({ x: e.clientX, y: e.clientY, type: 'button' })}
+              onMouseMove={(e) => setHoverTarget({ x: e.clientX, y: e.clientY, type: 'button' })}
+              onMouseLeave={() => setHoverTarget(null)}
+            >
               <RotateCcw size={18} />
               Reset
             </button>
