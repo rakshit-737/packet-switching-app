@@ -291,13 +291,6 @@ small {
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
-.team-avatar {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0;
-}
 .section-heading {
   display: grid;
   gap: 0.8rem;
