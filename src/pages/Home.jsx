@@ -188,19 +188,19 @@ const teamMembers = [
     name: 'Dr. Swaminathan Annadurai',
     role: 'Faculty Advisor',
     details: ['Assistant Professor', 'VIT Chennai'],
-    image: '/images/dr-swaminathan.jpg',
+    image: `${import.meta.env.BASE_URL}images/dr-swaminathan.jpg`,
   },
   {
     name: 'Rakshit Rameshbabu',
     role: 'Student Developer',
     details: ['Reg. No: 24BYB1117', 'B.Tech CSE in Cybersecurity', 'VIT Chennai'],
-    image: '/images/rakshit.jpg',
+    image: `${import.meta.env.BASE_URL}images/rakshit.jpg`,
   },
   {
     name: 'Harish Naganathan K',
     role: 'Student Developer',
     details: ['Reg. No: 24BYB1086', 'B.Tech CSE in Cybersecurity', 'VIT Chennai'],
-    image: '/images/harish.jpg',
+    image: `${import.meta.env.BASE_URL}images/harish.jpg`,
   },
 ]
 
