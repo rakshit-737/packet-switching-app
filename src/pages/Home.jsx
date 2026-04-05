@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowRight, BookOpen, Calculator, ExternalLink, HelpCircle, Network, Play, Shield, Users, Youtube, Zap } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
@@ -187,16 +188,19 @@ const teamMembers = [
     name: 'Dr. Swaminathan Annadurai',
     role: 'Faculty Advisor',
     details: ['Assistant Professor', 'VIT Chennai'],
+    image: '/images/dr-swaminathan.jpg',
   },
   {
     name: 'Rakshit Rameshbabu',
     role: 'Student Developer',
     details: ['Reg. No: 24BYB1117', 'B.Tech CSE in Cybersecurity', 'VIT Chennai'],
+    image: '/images/rakshit.jpg',
   },
   {
     name: 'Harish Naganathan K',
     role: 'Student Developer',
     details: ['Reg. No: 24BYB1086', 'B.Tech CSE in Cybersecurity', 'VIT Chennai'],
+    image: '/images/harish.jpg',
   },
 ]
 
@@ -212,6 +216,24 @@ const compareCards = [
     points: ['Reserved capacity', 'Fixed path', 'Great for real-time sessions'],
   },
 ]
+
+function TeamAvatar({ src, name }) {
+  const [imgFailed, setImgFailed] = useState(false)
+  const initials = name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join('')
+  if (imgFailed) {
+    return <div className="team-avatar">{initials}</div>
+  }
+  return (
+    <div className="team-avatar">
+      <img src={src} alt={name} loading="lazy" onError={() => setImgFailed(true)} />
+    </div>
+  )
+}
 
 export default function Home() {
   const navigate = useNavigate()
@@ -558,17 +580,9 @@ export default function Home() {
           className="home-team-grid"
           {...(prefersReducedMotion ? {} : { variants: staggerContainer })}
         >
-          {teamMembers.map(({ name, role, details }) => (
+          {teamMembers.map(({ name, role, details, image }) => (
             <motion.article key={name} className="team-member-card card" {...(prefersReducedMotion ? {} : { variants: fadeUp })}>
-              <img
-  className="team-avatar"
-  src={`/images/${name.toLowerCase().includes("swaminathan") 
-    ? "dr-swaminathan.jpg" 
-    : name.toLowerCase().includes("harish") 
-    ? "harish.jpg" 
-    : "rakshit.jpg"}`}
-  alt={name}
-/>
+              <TeamAvatar src={image} name={name} />
               <h3>{name}</h3>
               <span className="team-role">{role}</span>
               <ul className="team-details">
