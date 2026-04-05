@@ -560,9 +560,15 @@ export default function Home() {
         >
           {teamMembers.map(({ name, role, details }) => (
             <motion.article key={name} className="team-member-card card" {...(prefersReducedMotion ? {} : { variants: fadeUp })}>
-              <div className="team-avatar" aria-hidden="true">
-                {name.split(' ').filter(Boolean).slice(0, 2).map((w) => w[0]).join('')}
-              </div>
+              <img
+  className="team-avatar"
+  src={`/images/${name.toLowerCase().includes("swaminathan") 
+    ? "dr-swaminathan.jpg" 
+    : name.toLowerCase().includes("harish") 
+    ? "harish.jpg" 
+    : "rakshit.jpg"}`}
+  alt={name}
+/>
               <h3>{name}</h3>
               <span className="team-role">{role}</span>
               <ul className="team-details">
