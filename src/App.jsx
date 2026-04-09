@@ -7,6 +7,8 @@ import Home from './pages/Home'
 import Concepts from './pages/Concepts'
 import Visualizer from './pages/Visualizer'
 import Numericals from './pages/Numericals'
+import Learn from './pages/Learn'
+import DevelopedBy from './pages/DevelopedBy'
 import './App.css'
 
 export default function App() {
@@ -24,6 +26,8 @@ export default function App() {
           <Route path="/concepts" element={<Concepts />} />
           <Route path="/visualizer" element={<Visualizer />} />
           <Route path="/numericals" element={<Numericals />} />
+          <Route path="/learn" element={<Learn />} />
+          <Route path="/developed-by" element={<DevelopedBy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
@@ -45,6 +49,8 @@ export default function App() {
             <Link to="/concepts">Concept Atlas</Link>
             <Link to="/visualizer">Visualizer</Link>
             <Link to="/numericals">Numericals</Link>
+            <Link to="/learn">Learn</Link>
+            <Link to="/developed-by">Developed By</Link>
           </div>
 
           <div className="footer-column">
