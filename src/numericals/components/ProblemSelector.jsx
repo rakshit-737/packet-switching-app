@@ -40,6 +40,7 @@ export default function ProblemSelector({ topics, problemsByTopic, activeTopic, 
             key={opt.value}
             type="button"
             className={`diff-pill ${opt.value} ${diffFilter === opt.value ? 'active' : ''}`}
+            aria-pressed={diffFilter === opt.value}
             onClick={() => setDiffFilter(opt.value)}
           >
             {opt.label}

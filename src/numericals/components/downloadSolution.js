@@ -70,5 +70,6 @@ export function downloadSolutionPdf(result) {
     a.click()
     a.remove()
   }
-  setTimeout(() => URL.revokeObjectURL(url), 60000)
+  const PDF_CLEANUP_DELAY_MS = 60000 // 60 s — enough time for the print dialog to open
+  setTimeout(() => URL.revokeObjectURL(url), PDF_CLEANUP_DELAY_MS)
 }

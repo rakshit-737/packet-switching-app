@@ -32,7 +32,12 @@ export default function DynamicProblemForm({ problem, form, setForm, onSolve, er
         tabIndex={0}
         aria-expanded={inputsOpen}
         onClick={() => setInputsOpen((v) => !v)}
-        onKeyDown={(e) => e.key === 'Enter' && setInputsOpen((v) => !v)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault()
+            setInputsOpen((v) => !v)
+          }
+        }}
       >
         <h2 style={{ fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--muted)' }}>
           Parameters
