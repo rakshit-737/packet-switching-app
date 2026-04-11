@@ -11,6 +11,7 @@ export default function NumericalsSolver() {
   const [activeTopic, setActiveTopic] = useState(TOPICS[0]?.id || 'delay')
   const firstProblem = (byTopic.get(activeTopic) || [])[0] || PROBLEMS[0]
   const [activeProblemId, setActiveProblemId] = useState(firstProblem?.id)
+  const [diffFilter, setDiffFilter] = useState('all')
 
   const activeProblem = useMemo(() => PROBLEMS.find((p) => p.id === activeProblemId) || firstProblem, [activeProblemId, firstProblem])
 
@@ -38,6 +39,15 @@ export default function NumericalsSolver() {
     }
   }
 
+  const handleSelectRelated = (id) => {
+    const p = PROBLEMS.find((x) => x.id === id)
+    if (!p) return
+    setActiveTopic(p.topic)
+    setActiveProblemId(id)
+    setResult(null)
+    setError('')
+  }
+
   return (
     <div className="solver-grid">
       <ProblemSelector
@@ -51,11 +61,18 @@ export default function NumericalsSolver() {
           setResult(null)
           setError('')
         }}
+        diffFilter={diffFilter}
+        setDiffFilter={setDiffFilter}
       />
 
       <DynamicProblemForm problem={activeProblem} form={form} setForm={setForm} onSolve={onSolve} error={error} />
 
-      <SolutionPanel result={result} />
+      <SolutionPanel
+        result={result}
+        tips={result?.tips}
+        relatedProblems={result?.relatedProblems}
+        onSelectProblem={handleSelectRelated}
+      />
 
       <QuickReferencePanel quickReference={result?.quickReference} formula={activeProblem?.formula} />
     </div>
