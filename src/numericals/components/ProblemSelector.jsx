@@ -1,6 +1,16 @@
 import React from 'react'
 
-export default function ProblemSelector({ topics, problemsByTopic, activeTopic, setActiveTopic, activeProblemId, setActiveProblemId }) {
+const DIFF_OPTIONS = [
+  { value: 'all', label: 'All' },
+  { value: 'easy', label: 'Easy' },
+  { value: 'medium', label: 'Medium' },
+  { value: 'exam', label: 'Exam' },
+]
+
+export default function ProblemSelector({ topics, problemsByTopic, activeTopic, setActiveTopic, activeProblemId, setActiveProblemId, diffFilter, setDiffFilter }) {
+  const rawList = problemsByTopic.get(activeTopic) || []
+  const filteredList = diffFilter === 'all' ? rawList : rawList.filter((p) => p.difficulty === diffFilter)
+
   return (
     <div className="solver-selector card">
       <div className="section-heading">
@@ -24,18 +34,42 @@ export default function ProblemSelector({ topics, problemsByTopic, activeTopic, 
         ))}
       </div>
 
-      <div className="solver-problem-list" role="list">
-        {(problemsByTopic.get(activeTopic) || []).map((p) => (
+      <div className="diff-filter-row" role="group" aria-label="Filter by difficulty">
+        {DIFF_OPTIONS.map((opt) => (
           <button
-            key={p.id}
+            key={opt.value}
             type="button"
-            className={`solver-problem-btn ${activeProblemId === p.id ? 'active' : ''}`}
-            onClick={() => setActiveProblemId(p.id)}
+            className={`diff-pill ${opt.value} ${diffFilter === opt.value ? 'active' : ''}`}
+            onClick={() => setDiffFilter(opt.value)}
           >
-            <strong>{p.title}</strong>
-            <small>{p.description}</small>
+            {opt.label}
           </button>
         ))}
+      </div>
+
+      <div className="solver-problem-list" role="list">
+        {filteredList.length === 0 ? (
+          <p style={{ color: 'var(--muted)', fontSize: '0.85rem', padding: '0.5rem 0' }}>
+            No problems match this filter for the selected topic.
+          </p>
+        ) : (
+          filteredList.map((p) => (
+            <button
+              key={p.id}
+              type="button"
+              className={`solver-problem-btn ${activeProblemId === p.id ? 'active' : ''}`}
+              onClick={() => setActiveProblemId(p.id)}
+            >
+              <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                <strong>{p.title}</strong>
+                {p.difficulty && (
+                  <span className={`difficulty-badge ${p.difficulty}`}>{p.difficulty}</span>
+                )}
+              </span>
+              <small>{p.description}</small>
+            </button>
+          ))
+        )}
       </div>
     </div>
   )

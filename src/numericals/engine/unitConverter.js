@@ -68,6 +68,12 @@ export function fromBase(quantity, value, unit) {
     if (unit === 'Mbps') return value / 1e6
     if (unit === 'Gbps') return value / 1e9
   }
+  if (quantity === 'dataSize') {
+    if (unit === 'bit') return value
+    if (unit === 'byte') return value / 8
+    if (unit === 'KB') return value / (8 * 1024)
+    if (unit === 'MB') return value / (8 * 1024 * 1024)
+  }
   if (quantity === 'frequency') {
     if (unit === 'Hz') return value
     if (unit === 'KHz') return value / 1e3
@@ -78,6 +84,15 @@ export function fromBase(quantity, value, unit) {
     if (unit === 'linear') return value
     if (unit === 'percent') return value * 100
     if (unit === 'dB') return value
+  }
+  if (quantity === 'count') return value
+  if (quantity === 'distance') {
+    if (unit === 'm') return value
+    if (unit === 'km') return value / 1000
+  }
+  if (quantity === 'speed') {
+    if (unit === 'm/s') return value
+    if (unit === 'km/s') return value / 1000
   }
   return value
 }
