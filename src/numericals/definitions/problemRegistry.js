@@ -448,3 +448,66 @@ export function problemsByTopic() {
   }
   return map
 }
+
+/**
+ * Canonical flat list of all unique input parameters across every problem,
+ * de-duplicated by key (first definition wins).  Used by the inputs-first
+ * intake stage so the user can enter what they know before picking a solver.
+ */
+export const UNIVERSAL_INPUTS = (() => {
+  const seen = new Map()
+  // Label overrides for keys whose auto-derived label is ambiguous or shared
+  const labelOverrides = {
+    N: 'Number of hops/links (N)',
+    N_hops: 'Number of hops — pipelining (N_hops)',
+    N_links: 'Number of links — pipelining (N_links)',
+    loss: 'Packet loss rate (loss)',
+    loss_rate: 'Packet loss rate — distinct (loss_rate)',
+  }
+  for (const p of PROBLEMS) {
+    for (const inp of p.inputs) {
+      if (!seen.has(inp.key)) {
+        const label = labelOverrides[inp.key] || inp.label
+        seen.set(inp.key, { ...inp, label })
+      }
+    }
+  }
+  return [...seen.values()]
+})()
+
+/**
+ * Input-parameter groups shown in Stage A (collecting_inputs).
+ * Each group has a label and an array of input keys that belong to it.
+ */
+export const INPUT_GROUPS = [
+  {
+    id: 'data',
+    title: 'Data & Size',
+    keys: ['L', 'M', 'H'],
+  },
+  {
+    id: 'rates',
+    title: 'Rates & Bandwidth',
+    keys: ['R', 'B', 'arrival_rate', 'link_capacity', 'service_rate'],
+  },
+  {
+    id: 'time',
+    title: 'Time',
+    keys: ['RTT', 'proc_delay', 'setup_time'],
+  },
+  {
+    id: 'distance',
+    title: 'Distance & Speed',
+    keys: ['d', 's'],
+  },
+  {
+    id: 'network',
+    title: 'Network Parameters',
+    keys: ['N', 'N_hops', 'N_links', 'N_total', 'W', 'lambda', 'mu', 'buffer_size'],
+  },
+  {
+    id: 'quality',
+    title: 'Quality & Ratios',
+    keys: ['loss', 'loss_rate', 'payload', 'snr'],
+  },
+]

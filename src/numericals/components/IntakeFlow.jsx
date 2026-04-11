@@ -1,75 +1,79 @@
 import React, { useState, useCallback } from 'react'
 import { solve } from '../engine/solverEngine'
 import { classifyProblems } from '../engine/classifyProblems'
-import CollectStep from './CollectStep'
-import ClassifyStep from './ClassifyStep'
+import { PROBLEMS } from '../definitions/problemRegistry'
+import InputsCollectionStep from './InputsCollectionStep'
+import ChooseProblemStep from './ChooseProblemStep'
 import SolveStep from './SolveStep'
 
+/**
+ * Three-stage state machine:
+ *   collecting_inputs  →  choose_problem  →  solving
+ *
+ * Stage A (collecting_inputs): user enters raw values without seeing problem
+ *   options. No classification is run at this point.
+ * Stage B (choose_problem): after the user clicks "Done", classifyProblems is
+ *   run over ALL registered problems using the flat inputs. Solvable problems
+ *   are shown as selectable options.
+ * Stage C (solving): the selected problems are solved and results displayed.
+ */
 export default function IntakeFlow() {
-  // 'collect' → 'review' → 'solved'
-  const [step, setStep] = useState('collect')
+  // Stage A | B | C
+  const [stage, setStage] = useState('collecting_inputs')
 
-  // Which problem IDs the user has selected
-  const [selectedIds, setSelectedIds] = useState(new Set())
+  // Flat map of all known values: { [inputKey]: { value: string, unit: string } }
+  const [universalInputs, setUniversalInputs] = useState({})
 
-  // Form data: { [problemId]: { [inputKey]: { value: string, unit: string } } }
-  const [formData, setFormData] = useState({})
-
-  // Classification result from classifyProblems()
+  // Classification result (populated when entering stage B)
   const [classification, setClassification] = useState(null)
 
-  // Which solvable problems the user wants to solve
+  // Which solvable problem IDs the user has selected to solve
   const [selectedToSolve, setSelectedToSolve] = useState(new Set())
 
   // Solve results: { [problemId]: { result } | { error } }
   const [solutions, setSolutions] = useState({})
 
-  // ── Step 1 handlers ──────────────────────────────────────────────────────
+  // ── Stage A helpers ───────────────────────────────────────────────────────
 
-  const handleToggleProblem = useCallback((problemId, add, initForm) => {
-    setSelectedIds((prev) => {
-      const next = new Set(prev)
-      add ? next.add(problemId) : next.delete(problemId)
-      return next
-    })
-    if (add) {
-      // Preserve existing form data; only initialise if not present
-      setFormData((prev) => {
-        if (prev[problemId]) return prev
-        return { ...prev, [problemId]: initForm || {} }
-      })
-    }
-  }, [])
-
-  const handleUpdateFormData = useCallback((problemId, inputKey, patch) => {
-    setFormData((prev) => ({
+  const handleUpdateInput = useCallback((key, patch) => {
+    setUniversalInputs((prev) => ({
       ...prev,
-      [problemId]: {
-        ...(prev[problemId] || {}),
-        [inputKey]: { ...(prev[problemId]?.[inputKey] || {}), ...patch },
-      },
+      [key]: { ...(prev[key] || {}), ...patch },
     }))
   }, [])
 
-  const handleAnalyze = () => {
-    const result = classifyProblems([...selectedIds], formData)
-    setClassification(result)
-    // Auto-select all solvable problems for solving
-    setSelectedToSolve(new Set(result.solvable.map((s) => s.id)))
-    setStep('review')
+  const handleClearAll = useCallback(() => {
+    setUniversalInputs({})
+  }, [])
+
+  /**
+   * Classify ALL registered problems using the flat universal inputs.
+   * Each problem receives the same flat inputs as its form data.
+   */
+  const runClassification = (inputs) => {
+    const allIds = PROBLEMS.map((p) => p.id)
+    // Build per-problem form data by spreading the flat inputs into every problem slot
+    const formData = Object.fromEntries(allIds.map((id) => [id, inputs]))
+    return classifyProblems(allIds, formData)
   }
 
-  // ── Step 2 handlers ──────────────────────────────────────────────────────
+  /** User clicks "Done — Show what I can solve" */
+  const handleDone = () => {
+    const result = runClassification(universalInputs)
+    setClassification(result)
+    setSelectedToSolve(new Set(result.solvable.map((s) => s.id)))
+    setStage('choose_problem')
+  }
 
-  /** Re-run classification using current (possibly updated) formData */
+  // ── Stage B helpers ───────────────────────────────────────────────────────
+
+  /** Re-run classification after user fills in a missing value in Stage B */
   const handleReanalyze = () => {
-    const result = classifyProblems([...selectedIds], formData)
+    const result = runClassification(universalInputs)
     setClassification(result)
     setSelectedToSolve((prev) => {
       const next = new Set(prev)
-      // Add newly-solvable problems
       result.solvable.forEach(({ id }) => next.add(id))
-      // Remove problems that are no longer solvable
       result.needsMore.forEach(({ id }) => next.delete(id))
       result.unsupported.forEach(({ id }) => next.delete(id))
       return next
@@ -90,51 +94,49 @@ export default function IntakeFlow() {
     const newSolutions = {}
     for (const id of selectedToSolve) {
       try {
-        newSolutions[id] = { result: solve(id, formData[id] || {}) }
+        newSolutions[id] = { result: solve(id, universalInputs) }
       } catch (e) {
         newSolutions[id] = { error: e?.message || 'Solve failed' }
       }
     }
     setSolutions(newSolutions)
-    setStep('solved')
+    setStage('solving')
   }
 
-  // ── Step 3 handlers ──────────────────────────────────────────────────────
+  // ── Stage C helpers ───────────────────────────────────────────────────────
 
   const handleNewSession = () => {
-    setStep('collect')
-    setSelectedIds(new Set())
-    setFormData({})
+    setStage('collecting_inputs')
+    setUniversalInputs({})
     setClassification(null)
     setSelectedToSolve(new Set())
     setSolutions({})
   }
 
-  // ── Render ───────────────────────────────────────────────────────────────
+  // ── Render ────────────────────────────────────────────────────────────────
 
-  if (step === 'collect') {
+  if (stage === 'collecting_inputs') {
     return (
-      <CollectStep
-        selectedIds={selectedIds}
-        formData={formData}
-        onToggleProblem={handleToggleProblem}
-        onUpdateFormData={handleUpdateFormData}
-        onAnalyze={handleAnalyze}
+      <InputsCollectionStep
+        inputs={universalInputs}
+        onUpdateInput={handleUpdateInput}
+        onClearAll={handleClearAll}
+        onDone={handleDone}
       />
     )
   }
 
-  if (step === 'review') {
+  if (stage === 'choose_problem') {
     return (
-      <ClassifyStep
+      <ChooseProblemStep
         classification={classification}
-        formData={formData}
-        onUpdateFormData={handleUpdateFormData}
+        universalInputs={universalInputs}
+        onUpdateInput={handleUpdateInput}
         onReanalyze={handleReanalyze}
         selectedToSolve={selectedToSolve}
         onToggleSolve={handleToggleSolve}
         onSolveSelected={handleSolveSelected}
-        onBack={() => setStep('collect')}
+        onBack={() => setStage('collecting_inputs')}
       />
     )
   }
