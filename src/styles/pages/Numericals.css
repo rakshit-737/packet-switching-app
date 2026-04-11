@@ -358,3 +358,487 @@
   grid-template-columns: 1fr;
   gap: 0.85rem;
 }
+
+/* =============================================================================
+   Smart Intake Flow  — solver-shell, mode tabs, and three-step UI
+   ============================================================================= */
+
+/* ── Shell / mode switcher ──────────────────────────────────────────────── */
+.solver-shell {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.solver-mode-tabs {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.solver-mode-tab {
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(153, 179, 206, 0.14);
+  background: rgba(7, 17, 27, 0.7);
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: border-color 0.18s, color 0.18s;
+}
+
+.solver-mode-tab.active,
+.solver-mode-tab:hover {
+  color: var(--text);
+  border-color: rgba(31, 78, 104, 0.3);
+}
+
+/* ── Shared intake layout ───────────────────────────────────────────────── */
+.intake-collect,
+.intake-classify,
+.intake-solve {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.intake-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.intake-header-copy {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.intake-title {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.intake-subtitle {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.intake-header-actions {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ── Small button variant ───────────────────────────────────────────────── */
+.btn-sm {
+  padding: 0.4rem 0.85rem;
+  font-size: 0.82rem;
+}
+
+/* ── Footer / action bar ────────────────────────────────────────────────── */
+.intake-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding: 1rem 0 0;
+  border-top: 1px solid rgba(153, 179, 206, 0.1);
+}
+
+.intake-footer--classify {
+  flex-wrap: wrap;
+  row-gap: 0.75rem;
+}
+
+.intake-selection-summary {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* ── Problem groups (collect step) ──────────────────────────────────────── */
+.intake-problem-groups {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.intake-topic-group {
+  border: 1px solid rgba(153, 179, 206, 0.1);
+  border-radius: 20px;
+  overflow: hidden;
+  background: rgba(8, 18, 29, 0.55);
+}
+
+.intake-topic-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.85rem 1rem;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background 0.15s;
+}
+
+.intake-topic-header:hover {
+  background: rgba(31, 78, 104, 0.08);
+}
+
+.intake-topic-toggle {
+  color: var(--muted);
+  font-size: 0.7rem;
+  flex-shrink: 0;
+}
+
+.intake-topic-title {
+  flex: 1;
+}
+
+.intake-topic-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.intake-topic-count {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 400;
+}
+
+.intake-topic-selected {
+  background: rgba(34, 211, 238, 0.12);
+  color: var(--accent-cyan, #22d3ee);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+}
+
+.intake-topic-problems {
+  border-top: 1px solid rgba(153, 179, 206, 0.07);
+  padding: 0.5rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+/* ── Individual problem item ────────────────────────────────────────────── */
+.intake-problem-item {
+  border: 1px solid rgba(153, 179, 206, 0.08);
+  border-radius: 16px;
+  background: rgba(7, 17, 27, 0.4);
+  padding: 0.75rem 0.9rem;
+  transition: border-color 0.18s;
+}
+
+.intake-problem-item.selected {
+  border-color: rgba(31, 78, 104, 0.28);
+  background: rgba(31, 78, 104, 0.06);
+}
+
+.intake-problem-header {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.intake-problem-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.intake-checkbox {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--accent, #1a5f7a);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.intake-problem-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  font-size: 0.92rem;
+}
+
+.intake-problem-desc {
+  color: var(--muted);
+  font-size: 0.8rem;
+  padding-left: 1.6rem;
+}
+
+/* ── Inline input fields for selected problems ──────────────────────────── */
+.intake-problem-inputs {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(153, 179, 206, 0.08);
+  display: grid;
+  gap: 0.7rem;
+}
+
+.intake-field .solver-label {
+  font-size: 0.82rem;
+}
+
+/* =============================================================================
+   Classification / Review Step
+   ============================================================================= */
+
+.classify-bucket {
+  border-radius: 20px;
+  border: 1px solid rgba(153, 179, 206, 0.1);
+  background: rgba(8, 18, 29, 0.55);
+  padding: 1.1rem 1.15rem;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.classify-bucket--solvable {
+  border-color: rgba(52, 211, 153, 0.18);
+  background: rgba(52, 211, 153, 0.04);
+}
+
+.classify-bucket--needs-more {
+  border-color: rgba(251, 191, 36, 0.18);
+  background: rgba(251, 191, 36, 0.04);
+}
+
+.classify-bucket--unsupported {
+  border-color: rgba(248, 113, 113, 0.18);
+  background: rgba(248, 113, 113, 0.04);
+}
+
+.classify-bucket-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.classify-bucket-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.classify-bucket-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.classify-bucket-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.4rem;
+  height: 1.4rem;
+  padding: 0 0.35rem;
+  border-radius: 999px;
+  background: rgba(153, 179, 206, 0.12);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--muted-strong, var(--muted));
+  margin-left: 0.3rem;
+}
+
+.classify-empty {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* ── Solvable list ──────────────────────────────────────────────────────── */
+.classify-problem-list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.classify-problem-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 14px;
+  border: 1px solid rgba(153, 179, 206, 0.08);
+  background: rgba(7, 17, 27, 0.45);
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.9rem;
+}
+
+.classify-problem-row:hover {
+  background: rgba(31, 78, 104, 0.07);
+}
+
+.classify-problem-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* ── Needs-more items ───────────────────────────────────────────────────── */
+.classify-needs-more-list {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.classify-needs-more-item {
+  padding: 0.9rem 1rem;
+  border-radius: 16px;
+  border: 1px solid rgba(251, 191, 36, 0.14);
+  background: rgba(7, 17, 27, 0.5);
+  display: grid;
+  gap: 0.65rem;
+}
+
+.classify-needs-more-title {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  font-size: 0.92rem;
+}
+
+.classify-missing-checklist {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.classify-missing-label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.classify-missing-field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.classify-missing-field-name {
+  color: var(--muted-strong, var(--muted));
+  font-size: 0.83rem;
+}
+
+.classify-missing-input {
+  /* inherits .solver-control grid */
+}
+
+.classify-recheck-btn {
+  justify-self: start;
+}
+
+/* ── Unsupported rows ───────────────────────────────────────────────────── */
+.classify-unsupported-row {
+  cursor: default;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.classify-unsupported-reason {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+/* ── Classify footer actions ────────────────────────────────────────────── */
+.classify-select-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+/* =============================================================================
+   Solutions Step
+   ============================================================================= */
+
+.solve-results {
+  display: grid;
+  gap: 1rem;
+}
+
+.solve-result-card {
+  padding: 1.25rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.solve-error-card {
+  border-color: rgba(248, 113, 113, 0.2) !important;
+  background: rgba(120, 20, 20, 0.12) !important;
+}
+
+.solve-result-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.solve-result-title {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  font-size: 0.95rem;
+}
+
+.solve-result-answer {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.solve-result-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.solve-error-content {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.solve-error-id {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+@media (max-width: 640px) {
+  .intake-header {
+    flex-direction: column;
+  }
+  .intake-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .intake-footer .btn-primary {
+    text-align: center;
+  }
+  .classify-select-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .solve-result-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
