@@ -9,6 +9,7 @@ import Visualizer from './pages/Visualizer'
 import Numericals from './pages/Numericals'
 import Learn from './pages/Learn'
 import DevelopedBy from './pages/DevelopedBy'
+import Help from './pages/Help'
 import './App.css'
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
           <Route path="/numericals" element={<Numericals />} />
           <Route path="/learn" element={<Learn />} />
           <Route path="/developed-by" element={<DevelopedBy />} />
+          <Route path="/help" element={<Help />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
@@ -50,6 +52,7 @@ export default function App() {
             <Link to="/visualizer">Visualizer</Link>
             <Link to="/numericals">Numericals</Link>
             <Link to="/learn">Learn</Link>
+            <Link to="/help">Help</Link>
             <Link to="/developed-by">Developed By</Link>
           </div>
 
