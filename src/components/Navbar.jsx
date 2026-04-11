@@ -1,6 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { BookOpen, Calculator, Cpu, Menu, Play, X } from 'lucide-react'
+import {
+  BookOpen,
+  Calculator,
+  Cpu,
+  GraduationCap,
+  HelpCircle,
+  Menu,
+  Play,
+  Users,
+  X,
+} from 'lucide-react'
 import '../styles/Navbar.css'
 
 const links = [
@@ -92,6 +102,30 @@ export default function Navbar() {
           <Link to="/visualizer" className="btn btn-primary navbar-cta">
             Open Lab
           </Link>
+
+          <div className="navbar-shortcuts">
+            <NavLink
+              to="/learn"
+              className={({ isActive }) => `navbar-shortcut-btn${isActive ? ' active' : ''}`}
+            >
+              <GraduationCap size={14} />
+              Learn
+            </NavLink>
+            <NavLink
+              to="/help"
+              className={({ isActive }) => `navbar-shortcut-btn${isActive ? ' active' : ''}`}
+            >
+              <HelpCircle size={14} />
+              Help
+            </NavLink>
+            <NavLink
+              to="/developed-by"
+              className={({ isActive }) => `navbar-shortcut-btn${isActive ? ' active' : ''}`}
+            >
+              <Users size={14} />
+              Developed By
+            </NavLink>
+          </div>
         </div>
       </div>
     </header>
